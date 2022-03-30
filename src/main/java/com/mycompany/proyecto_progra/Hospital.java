@@ -27,7 +27,6 @@ public class Hospital{
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));       
         int numero = -1;
         while(numero != 0){
-            Enfermera enf = new Enfermera();
             System.out.println("-----------------------------------------");
             System.out.println("          Bienvenido al Hospital");
             System.out.println("-----------------------------------------");
@@ -35,7 +34,7 @@ public class Hospital{
             
             System.out.println("1. Agregar Enfermera.");
             System.out.println("2. Mostrar Lista de Enfermeras.");
-            System.out.println("3. ");
+            System.out.println("3. Mostrar Enfermera");
             System.out.println("4. ");
             System.out.println("0. Salir");
             System.out.println("Seleccione el numero para operar:");
@@ -44,7 +43,7 @@ public class Hospital{
             switch(numero){
                 case 1:
                 case 2:
-                case 3:
+                case 3: mostrarEnfermeraPorCodigo();
                 case 4:
                 case 0: break;
                 default: System.out.println("Opcion no valida."); break;
@@ -54,5 +53,16 @@ public class Hospital{
     }
     public void cargarDatos(){
         
+    }
+    public void mostrarEnfermeraPorCodigo()throws IOException{
+        BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
+        String ingreso;
+        Enfermera enfermera;
+        System.out.println("Ingrese su Codigo:");
+        ingreso=entrada.readLine();
+        if(this.enfermerasCodigo.containsKey(Integer.parseInt(ingreso))==true){
+            enfermera=this.enfermerasCodigo.get(Integer.parseInt(ingreso));
+            enfermera.mostrarEnfermera();
+        }
     }
 }
