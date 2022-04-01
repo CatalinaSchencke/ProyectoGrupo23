@@ -61,6 +61,7 @@ public class ManejoArchivos {
             ex.printStackTrace(System.out);
         }
     }  
+    //ACA
     public static ArrayList<AreasHospital> cargarArchivoList(String nombreArchivo){
         File archivo = new File(nombreArchivo);
         ArrayList<AreasHospital> listaAr=new ArrayList();
@@ -105,7 +106,7 @@ public class ManejoArchivos {
         }*/
         return listaAr;
     }
-    public static HashMap cargarArchivoMap(String nombreArchivo){
+    public static HashMap cargarArchivoMapCodigo(String nombreArchivo){
         File archivo = new File(nombreArchivo);
         HashMap<Integer,Enfermera> codigos = new HashMap();
         int numeroClave=0;
@@ -123,6 +124,35 @@ public class ManejoArchivos {
                 numeroClave++;
                 lectura = entrada.readLine();
                 codigos.put(enfermera.getCodigo(), enfermera);
+            }
+            entrada.close();
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace(System.out);
+        } catch (IOException ex) {
+            ex.printStackTrace(System.out);
+        }
+        
+        return codigos;
+    }
+    
+    public static HashMap cargarArchivoMapNombre(String nombreArchivo){
+        File archivo = new File(nombreArchivo);
+        HashMap<String,Enfermera> codigos = new HashMap();
+        int numeroClave=0;
+        try {
+            BufferedReader entrada = new BufferedReader( new FileReader(archivo));
+            String lectura = entrada.readLine();            
+            while(lectura != null){
+                
+                String[] parts=lectura.split(",");
+                Enfermera enfermera= new Enfermera();
+                
+                enfermera.setNombre(parts[1]);
+                enfermera.setCodigo(100+numeroClave);
+                
+                numeroClave++;
+                lectura = entrada.readLine();
+                codigos.put(enfermera.getNombre(), enfermera);
             }
             entrada.close();
         } catch (FileNotFoundException ex) {

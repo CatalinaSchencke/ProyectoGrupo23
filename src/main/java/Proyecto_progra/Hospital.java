@@ -7,12 +7,14 @@ public class Hospital{
     private ArrayList<AreasHospital> areasHospital ;
     private String nombre;
     private HashMap<Integer,Enfermera> enfermerasCodigo;
+    private HashMap<String,Enfermera> enfermerasNombre;
     
     public Hospital(){}
     public Hospital(String nombre) {
         this.areasHospital = new ArrayList<>();
         this.nombre = nombre;
         this.enfermerasCodigo = new HashMap<>();
+        this.enfermerasNombre = new HashMap<>();
     }
 
     public String getNombre() {
@@ -35,7 +37,7 @@ public class Hospital{
             
             System.out.println("1. Agregar Enfermera.");
             System.out.println("2. Mostrar Lista de Enfermeras.");
-            System.out.println("3. ");
+            System.out.println("3. Buscar Enfermera.");
             System.out.println("4. ");
             System.out.println("0. Salir");
             System.out.println("Seleccione el numero para operar:");
@@ -45,15 +47,10 @@ public class Hospital{
                 case 1:
                 case 2:
                 case 3: {
-                    /*System.out.println("Ingrese numero Codigo o Nombre de la enfermera:");
-                    if (isNumeric(entrada.readLine())==true){
-                        
-                    }else{
-                        
-                    }
-                    
-                    buscarEnfermera(entrada);
-                    buscarEnfermera(entrada);*/
+                    System.out.println("Ingrese numero Codigo o Nombre de la enfermera:");
+                    String dato =entrada.readLine();
+                    if (isNumeric(dato)==true) buscarEnfermera(Integer.parseInt(dato));
+                    else buscarEnfermera(dato);
                 }
                 case 4: 
                 case 0: break;
@@ -66,14 +63,14 @@ public class Hospital{
         this.areasHospital = ManejoArchivos.cargarArchivoList("C:\\Users\\lucas\\Desktop\\Universidad\\Programacion General\\Java\\Proyecto_Progra\\ProyectoGrupo23\\src\\main\\java\\Proyecto_progra\\Enfermeras.txt");
         //for(AreasHospital a : this.areasHospital)
           //  a.mostrarArea();
-        
-        
-
-        this.enfermerasCodigo = ManejoArchivos.cargarArchivoMap("C:\\Users\\lucas\\Desktop\\Universidad\\Programacion General\\Java\\Proyecto_Progra\\ProyectoGrupo23\\src\\main\\java\\Proyecto_progra\\Enfermeras.txt");  
-        //for(int i=0;i<20;i++)
-          //  System.out.println(this.enfermerasCodigo.get(100+i).getNombre());
-            
-        
+        this.enfermerasCodigo = ManejoArchivos.cargarArchivoMapCodigo("C:\\Users\\lucas\\Desktop\\Universidad\\Programacion General\\Java\\Proyecto_Progra\\ProyectoGrupo23\\src\\main\\java\\Proyecto_progra\\Enfermeras.txt");  
+        /*for(Enfermera a : this.enfermerasCodigo.values()){
+            a.mostrarEnfermera();
+        }*/
+        this.enfermerasNombre = ManejoArchivos.cargarArchivoMapNombre("C:\\Users\\lucas\\Desktop\\Universidad\\Programacion General\\Java\\Proyecto_Progra\\ProyectoGrupo23\\src\\main\\java\\Proyecto_progra\\Enfermeras.txt"); 
+        for(Enfermera a : this.enfermerasNombre.values()){
+            a.mostrarEnfermera();
+        }
     }
     public void buscarEnfermera(int codigo){
         Enfermera enfermera;
@@ -82,13 +79,14 @@ public class Hospital{
             enfermera.mostrarEnfermera();
         }else System.out.println("No existe ese codigo de enfermera");
     }
-    /*public void buscarEnfermera(String nombre){
+    
+    public void buscarEnfermera(String nombre){
         Enfermera enfermera;
-        if(this.enfermerasCodigo.containsKey(codigo)==true){
-            enfermera=this.enfermerasCodigo.get(codigo);
+        if(this.enfermerasNombre.containsKey(nombre)==true){
+            enfermera=this.enfermerasNombre.get(nombre);
             enfermera.mostrarEnfermera();
         }else System.out.println("No existe ese codigo de enfermera");
-    }*/
+    }
     
     private static boolean isNumeric (String cadena){
         boolean result;
