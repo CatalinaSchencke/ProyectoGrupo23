@@ -35,7 +35,7 @@ public class Hospital{
             
             System.out.println("1. Agregar Enfermera.");
             System.out.println("2. Mostrar Lista de Enfermeras.");
-            System.out.println("3. Mostrar Enfermera");
+            System.out.println("3. ");
             System.out.println("4. ");
             System.out.println("0. Salir");
             System.out.println("Seleccione el numero para operar:");
@@ -44,8 +44,18 @@ public class Hospital{
             switch(numero){
                 case 1:
                 case 2:
-                case 3: mostrarEnfermeraPorCodigo();
-                case 4:
+                case 3: {
+                    /*System.out.println("Ingrese numero Codigo o Nombre de la enfermera:");
+                    if (isNumeric(entrada.readLine())==true){
+                        
+                    }else{
+                        
+                    }
+                    
+                    buscarEnfermera(entrada);
+                    buscarEnfermera(entrada);*/
+                }
+                case 4: 
                 case 0: break;
                 default: System.out.println("Opcion no valida."); break;
             }
@@ -65,18 +75,31 @@ public class Hospital{
             
         
     }
-    public void mostrarEnfermeraPorCodigo()throws IOException{
-        BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
-        String ingreso;
+    public void buscarEnfermera(int codigo){
         Enfermera enfermera;
-        System.out.println("Ingrese su Codigo:");
-        ingreso=entrada.readLine();
-        if(this.enfermerasCodigo.containsKey(Integer.parseInt(ingreso))==true){
-            enfermera=this.enfermerasCodigo.get(Integer.parseInt(ingreso));
+        if(this.enfermerasCodigo.containsKey(codigo)==true){
+            enfermera=this.enfermerasCodigo.get(codigo);
             enfermera.mostrarEnfermera();
-        }
+        }else System.out.println("No existe ese codigo de enfermera");
     }
+    /*public void buscarEnfermera(String nombre){
+        Enfermera enfermera;
+        if(this.enfermerasCodigo.containsKey(codigo)==true){
+            enfermera=this.enfermerasCodigo.get(codigo);
+            enfermera.mostrarEnfermera();
+        }else System.out.println("No existe ese codigo de enfermera");
+    }*/
     
+    private static boolean isNumeric (String cadena){
+        boolean result;
+        try{
+            Integer.parseInt(cadena);
+            result = true;
+        }catch (NumberFormatException nfe){
+            result = false;
+        }
+        return result;
+    }
     
      
 }
