@@ -1,4 +1,4 @@
-package com.mycompany.proyecto_progra;
+package Proyecto_progra;
 import java.util.*;
 
 public class Enfermera {
@@ -25,13 +25,13 @@ public class Enfermera {
         System.out.println(this.disponibilidad);
         System.out.println(this.turno);
         System.out.println(this.codigo);
-        int i = 0;
+        /*int i = 0;
         for (IngSalEnfermeras horario : this.IngresoSalida){
             System.out.println(horario.horaEntrada);
             System.out.println(horario.horaEntrada);
             System.out.println("Dia "+i);
             i++;
-        }
+        }*/
     }
     
     public int getCodigo() {

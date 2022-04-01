@@ -1,4 +1,4 @@
-package com.mycompany.proyecto_progra;
+package Proyecto_progra;
 
 public class IngSalEnfermeras {
     int horaEntrada;

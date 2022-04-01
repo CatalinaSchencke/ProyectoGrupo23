@@ -1,9 +1,10 @@
-package com.mycompany.proyecto_progra;
+package Proyecto_progra;
+
 import java.io.*;
 import java.util.*;
 
 public class Hospital{
-    private List<AreasHospital> areasHospital ;
+    private ArrayList<AreasHospital> areasHospital ;
     private String nombre;
     private HashMap<Integer,Enfermera> enfermerasCodigo;
     
@@ -52,7 +53,13 @@ public class Hospital{
         }
     }
     public void cargarDatos(){
+        this.areasHospital = ManejoArchivos.cargarArchivoList("C:\\Users\\lucas\\Desktop\\Universidad\\Programacion General\\Java\\Proyecto_Progra\\ProyectoGrupo23\\src\\main\\java\\Proyecto_progra\\Enfermeras.txt");
+        for (AreasHospital a : this.areasHospital){
+            a.mostrarArea();
+        }
         
+
+        //this.enfermerasCodigo = ManejoArchivos.cargarArchivoMap("C:\\Users\\lucas\\Desktop\\Universidad\\Programacion General\\Java\\Proyecto_Progra\\ProyectoGrupo23\\src\\main\\java\\Proyecto_progra\\Enfermeras.txt");  
     }
     public void mostrarEnfermeraPorCodigo()throws IOException{
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
@@ -65,4 +72,7 @@ public class Hospital{
             enfermera.mostrarEnfermera();
         }
     }
+    
+    
+     
 }

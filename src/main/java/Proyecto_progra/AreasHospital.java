@@ -1,4 +1,4 @@
-package com.mycompany.proyecto_progra;
+package Proyecto_progra;
 /*Usar lista para guardar a las 4 enfermeras por area*/
 import java.util.*;
 
@@ -6,6 +6,7 @@ public class AreasHospital {
     private ArrayList<Enfermera> enfermerasArea ;
     private String nombre;
     
+    public AreasHospital(){}
     public AreasHospital(String nombre) {
         this.enfermerasArea = new ArrayList<>();
         this.nombre = nombre;
