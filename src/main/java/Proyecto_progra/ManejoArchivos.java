@@ -74,6 +74,7 @@ public class ManejoArchivos {
                 String[] parts=lectura.split(",");
                 Enfermera enfermera= new Enfermera();
                 for(int i=0;i<parts.length;i++){
+                    
                     switch(i){
                         case 0:{
                             if(buscarArea(parts[i],listaAr)==false || listaAr.size()==13){
@@ -84,9 +85,11 @@ public class ManejoArchivos {
                         case 1:{
                             enfermera.setNombre(parts[i]);
                             enfermera.setCodigo(100+numeroClave);
+                            
                         }
                         case 2:{
-                            
+                           enfermera.setTurno(parts[2]);
+   
                         }
                     }
                 }
@@ -120,10 +123,11 @@ public class ManejoArchivos {
                 
                 enfermera.setNombre(parts[1]);
                 enfermera.setCodigo(100+numeroClave);
-                
+                enfermera.setTurno(parts[2]);
                 numeroClave++;
                 lectura = entrada.readLine();
                 codigos.put(enfermera.getCodigo(), enfermera);
+                
             }
             entrada.close();
         } catch (FileNotFoundException ex) {
@@ -149,10 +153,11 @@ public class ManejoArchivos {
                 
                 enfermera.setNombre(parts[1]);
                 enfermera.setCodigo(100+numeroClave);
-                
+                enfermera.setTurno(parts[2]);
                 numeroClave++;
                 lectura = entrada.readLine();
                 codigos.put(enfermera.getNombre(), enfermera);
+                
             }
             entrada.close();
         } catch (FileNotFoundException ex) {
