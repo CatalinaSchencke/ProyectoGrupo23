@@ -54,12 +54,16 @@ public class Hospital{
     }
     public void cargarDatos(){
         this.areasHospital = ManejoArchivos.cargarArchivoList("C:\\Users\\lucas\\Desktop\\Universidad\\Programacion General\\Java\\Proyecto_Progra\\ProyectoGrupo23\\src\\main\\java\\Proyecto_progra\\Enfermeras.txt");
-        for (AreasHospital a : this.areasHospital){
-            a.mostrarArea();
-        }
+        //for(AreasHospital a : this.areasHospital)
+          //  a.mostrarArea();
+        
         
 
-        //this.enfermerasCodigo = ManejoArchivos.cargarArchivoMap("C:\\Users\\lucas\\Desktop\\Universidad\\Programacion General\\Java\\Proyecto_Progra\\ProyectoGrupo23\\src\\main\\java\\Proyecto_progra\\Enfermeras.txt");  
+        this.enfermerasCodigo = ManejoArchivos.cargarArchivoMap("C:\\Users\\lucas\\Desktop\\Universidad\\Programacion General\\Java\\Proyecto_Progra\\ProyectoGrupo23\\src\\main\\java\\Proyecto_progra\\Enfermeras.txt");  
+        //for(int i=0;i<20;i++)
+          //  System.out.println(this.enfermerasCodigo.get(100+i).getNombre());
+            
+        
     }
     public void mostrarEnfermeraPorCodigo()throws IOException{
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 

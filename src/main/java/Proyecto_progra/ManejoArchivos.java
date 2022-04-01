@@ -65,7 +65,7 @@ public class ManejoArchivos {
         File archivo = new File(nombreArchivo);
         ArrayList<AreasHospital> listaAr=new ArrayList();
         ArrayList<Enfermera> listaEnf = new ArrayList();
-        int codigo = 0;
+        int numeroClave = 0;
         try {
             BufferedReader entrada = new BufferedReader( new FileReader(archivo));
             String lectura = entrada.readLine();
@@ -82,7 +82,7 @@ public class ManejoArchivos {
                         }
                         case 1:{
                             enfermera.setNombre(parts[i]);
-                            enfermera.setCodigo(100+codigo);
+                            enfermera.setCodigo(100+numeroClave);
                         }
                         case 2:{
                             
@@ -91,7 +91,7 @@ public class ManejoArchivos {
                 }
                 int index = obtenerIndex(listaAr, parts[0]);
                 listaAr.get(index).agregarListaEnfermeras(enfermera);
-                codigo++;
+                numeroClave++;
                 lectura = entrada.readLine();
             }
             entrada.close();
@@ -108,16 +108,21 @@ public class ManejoArchivos {
     public static HashMap cargarArchivoMap(String nombreArchivo){
         File archivo = new File(nombreArchivo);
         HashMap<Integer,Enfermera> codigos = new HashMap();
+        int numeroClave=0;
         try {
             BufferedReader entrada = new BufferedReader( new FileReader(archivo));
             String lectura = entrada.readLine();            
             while(lectura != null){
-                System.out.println("lectura = " + lectura);
+                
                 String[] parts=lectura.split(",");
-                for(String a: parts){
-                    System.out.println("parte = " + a);  
-                }
+                Enfermera enfermera= new Enfermera();
+                
+                enfermera.setNombre(parts[1]);
+                enfermera.setCodigo(100+numeroClave);
+                
+                numeroClave++;
                 lectura = entrada.readLine();
+                codigos.put(enfermera.getCodigo(), enfermera);
             }
             entrada.close();
         } catch (FileNotFoundException ex) {
@@ -125,6 +130,7 @@ public class ManejoArchivos {
         } catch (IOException ex) {
             ex.printStackTrace(System.out);
         }
+        
         return codigos;
     }
     
