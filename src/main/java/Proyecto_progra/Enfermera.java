@@ -13,7 +13,7 @@ public class Enfermera {
     public Enfermera(String nombre, int salarioPorSemana, boolean disponibilidad, String turno, int codigo) {
         this.nombre = nombre;
         this.IngresoSalida = new ArrayList<>();
-        this.salarioPorSemana = salarioPorSemana;
+        this.salarioPorSemana = salarioPorSemana; 
         this.disponibilidad = disponibilidad;
         this.turno = turno;
         this.codigo = codigo;

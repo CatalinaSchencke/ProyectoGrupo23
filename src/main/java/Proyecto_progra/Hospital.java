@@ -44,8 +44,8 @@ public class Hospital{
             
             numero=Integer.parseInt(entrada.readLine());
             switch(numero){
-                case 1: agregarEnfermera();
-                case 2: mostrarEnfermeras();
+                case 1: agregarEnfermera(); break;
+                case 2: mostrarEnfermeras(); break;
                 case 3: {
                     System.out.println("Ingrese numero Codigo o Nombre de la enfermera:");
                     String dato=entrada.readLine();
@@ -156,8 +156,45 @@ public class Hospital{
             
         }
     }
-    public void agregarEnfermera(){
+    public void agregarEnfermera() throws IOException{
+      BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
+      
+        System.out.println("Ingrese Nombre de la enfermera");
+        String dato;
+        int cont=0;
+        do{
+            dato=entrada.readLine();
+            if (this.enfermerasNombre.containsKey(dato) == true){
+                System.out.println("El nombre ingresado ya existe en la base de datos, por favor ingresar otro");
+                cont++; 
+            }
+            if (cont==3)return;
+        }while(this.enfermerasNombre.containsKey(dato) == true);
         
+        Enfermera nurse = new Enfermera();
+        nurse.setNombre(dato);
+
+        System.out.println("Ingrese disponibilidad (true / false )");
+        dato=entrada.readLine();
+        if (dato.equals(true)) nurse.setDisponibilidad(true);
+        if (dato.equals(false)) nurse.setDisponibilidad(false);
+
+        System.out.println("Ingrese turno (dia / noche)");
+        dato=entrada.readLine();
+        nurse.setTurno(dato);
+        
+        System.out.println("Ingrese el area al que pertenece");
+        do{
+            dato=entrada.readLine();
+            if (buscarArea(dato) == false){
+                System.out.println("No se puede ingresar una nueva area a la base de datos, por favor intente nuevamente");
+            }
+        }while(this.enfermerasNombre.containsKey(dato) == true);
+        //agregar a la lista
+        this.areasHospital.get(obtenerIndex(dato)).agregarListaEnfermeras(nurse);
+        //agregar al mapa
+        this.enfermerasNombre.put(nurse.getNombre(), nurse);
+      
     }
     
     public void mostrarEnfermeras(){
@@ -176,7 +213,7 @@ public class Hospital{
     }
     
     public void cargarDatos(){
-        File archivo = new File("C:\\Users\\lucas\\Desktop\\Universidad\\Programacion General\\Java\\Proyecto_Progra\\ProyectoGrupo23\\src\\main\\java\\Proyecto_progra\\Enfermeras.txt");
+        File archivo = new File("C:\\Users\\vicen\\OneDrive\\Documentos\\GitHub\\ProyectoGrupo23\\src\\main\\java\\Proyecto_progra\\Enfermeras.txt");
         int numeroClave=0;
         try {
             BufferedReader entrada = new BufferedReader( new FileReader(archivo));
