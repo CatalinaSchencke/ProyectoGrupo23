@@ -44,11 +44,11 @@ public class Hospital{
             
             numero=Integer.parseInt(entrada.readLine());
             switch(numero){
-                case 1:
-                case 2:
+                case 1: agregarEnfermera();
+                case 2: mostrarEnfermeras();
                 case 3: {
                     System.out.println("Ingrese numero Codigo o Nombre de la enfermera:");
-                    String dato =entrada.readLine();
+                    String dato=entrada.readLine();
                     if (isNumeric(dato)==true) buscarEnfermera(Integer.parseInt(dato));
                     else buscarEnfermera(dato);
                 }
@@ -156,19 +156,80 @@ public class Hospital{
             
         }
     }
-    public void cargarDatos(){
-        this.areasHospital = ManejoArchivos.cargarArchivoList("C:\\Users\\CATALINA\\Desktop\\ProyectoGrupo23\\src\\main\\java\\Proyecto_progra\\Enfermeras.txt");
-        //for(AreasHospital a : this.areasHospital)
-          //  a.mostrarArea();
-        this.enfermerasCodigo = ManejoArchivos.cargarArchivoMapCodigo("C:\\Users\\CATALINA\\Desktop\\ProyectoGrupo23\\src\\main\\java\\Proyecto_progra\\Enfermeras.txt");  
-        /*for(Enfermera a : this.enfermerasCodigo.values()){
-            a.mostrarEnfermera();
-        }*/
-        this.enfermerasNombre = ManejoArchivos.cargarArchivoMapNombre("C:\\Users\\CATALINA\\Desktop\\ProyectoGrupo23\\src\\main\\java\\Proyecto_progra\\Enfermeras.txt"); 
-        for(Enfermera a : this.enfermerasNombre.values()){
+    public void agregarEnfermera(){
+        
+    }
+    
+    public void mostrarEnfermeras(){
+        
+        for(AreasHospital a : this.areasHospital)
+            a.mostrarArea();
+        
+        /*
+        for(Enfermera a : this.enfermerasCodigo.values()){
             a.mostrarEnfermera();
         }
+        
+        for(Enfermera a : this.enfermerasNombre.values()){
+            a.mostrarEnfermera();
+        }*/
     }
+    
+    public void cargarDatos(){
+        File archivo = new File("C:\\Users\\lucas\\Desktop\\Universidad\\Programacion General\\Java\\Proyecto_Progra\\ProyectoGrupo23\\src\\main\\java\\Proyecto_progra\\Enfermeras.txt");
+        int numeroClave=0;
+        try {
+            BufferedReader entrada = new BufferedReader( new FileReader(archivo));
+            String lectura = entrada.readLine();            
+            while(lectura != null){
+                
+                String[] parts=lectura.split(",");
+                Enfermera enfermera= new Enfermera();
+                
+                enfermera.setNombre(parts[1]);
+                enfermera.setCodigo(100+numeroClave);
+                enfermera.setTurno(parts[2]);
+                
+                
+                this.enfermerasCodigo.put(enfermera.getCodigo(), enfermera);
+                this.enfermerasNombre.put(enfermera.getNombre(), enfermera);
+                
+                if(buscarArea(parts[0])==false || this.areasHospital.size()==13){
+                    AreasHospital area= new AreasHospital(parts[0]);
+                    this.areasHospital.add(area);
+                }else{
+                    int index = obtenerIndex(parts[0]);
+                    this.areasHospital.get(index).agregarListaEnfermeras(enfermera);
+                }
+       
+                numeroClave++;  
+                lectura = entrada.readLine();
+            }
+            
+            entrada.close();
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace(System.out);
+        } catch (IOException ex) {
+            ex.printStackTrace(System.out);
+        }   
+    }
+    public boolean buscarArea(String nombreArea){
+        for (AreasHospital area : this.areasHospital){
+            if (area.getNombre().equals(nombreArea)){
+                return true;
+            }
+        }
+        return false;
+    }
+    public int obtenerIndex(String nombreArea){
+        int i;
+        for (i=0;i<this.areasHospital.size();i++){
+            if (this.areasHospital.get(i).getNombre().equals(nombreArea))
+                return i;
+        } 
+        return i;
+    }
+    
     public void cambioTurnoEnfermera(Enfermera enfermera, String turno){
         System.out.println("Información de la enfermera Inicial"); 
         enfermera.mostrarEnfermera();
@@ -191,6 +252,7 @@ public class Hospital{
         System.out.println("Información de la enfermera Modificada"); 
         enfermera.mostrarEnfermera();
     }
+    
     public Enfermera retornarEnfermera (int codigo){
         
         if(this.enfermerasCodigo.containsKey(codigo)==true){
@@ -202,7 +264,7 @@ public class Hospital{
         }
         return null ;
     }
-     public Enfermera retornarEnfermera (String nombre){
+    public Enfermera retornarEnfermera (String nombre){
         if(this.enfermerasNombre.containsKey(nombre)==true){
             Enfermera enfermera;
             enfermera=this.enfermerasNombre.get(nombre);
@@ -212,6 +274,7 @@ public class Hospital{
         }
         return null ;
     }
+    
     public void buscarEnfermera(int codigo){
         Enfermera enfermera;
         if(this.enfermerasCodigo.containsKey(codigo)==true){
@@ -219,7 +282,6 @@ public class Hospital{
             enfermera.mostrarEnfermera();
         }else System.out.println("No existe ese codigo de enfermera");
     }
-    
     public void buscarEnfermera(String nombre){
         Enfermera enfermera;
         
@@ -239,6 +301,4 @@ public class Hospital{
         }
         return result;
     }
-    
-     
 }
