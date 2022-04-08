@@ -36,7 +36,7 @@ public class Hospital{
             
             
             System.out.println("1. Agregar Enfermera.");
-            System.out.println("2. Mostrar Lista de Enfermeras.");
+            System.out.println("2. Mostrar Todo.");
             System.out.println("3. Buscar Enfermera.");
             System.out.println("4. Cambiar Turno y/o Disponibilidad ");
             System.out.println("0. Salir");
@@ -45,7 +45,7 @@ public class Hospital{
             numero=Integer.parseInt(entrada.readLine());
             switch(numero){
                 case 1: agregarEnfermera(); break;
-                case 2: mostrarEnfermeras(); break;
+                case 2: mostrarTodo(); break;
                 case 3: {
                     System.out.println("Ingrese numero Codigo o Nombre de la enfermera:");
                     String dato=entrada.readLine();
@@ -157,8 +157,7 @@ public class Hospital{
         }
     }
     public void agregarEnfermera() throws IOException{
-      BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
-      
+        BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
         System.out.println("Ingrese Nombre de la enfermera");
         String dato;
         int cont=0;
@@ -196,12 +195,24 @@ public class Hospital{
         this.enfermerasNombre.put(nurse.getNombre(), nurse);
       
     }
-    
-    public void mostrarEnfermeras(){
-        
-        for(AreasHospital a : this.areasHospital)
-            a.mostrarArea();
-        
+    public void mostrarTodo()throws IOException{
+        BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));       
+        System.out.println("1. Mostrar Areas.");
+        System.out.println("2. Mostrar Enfermeras.");
+        switch(Integer.parseInt(entrada.readLine())){
+            case 1:{
+                for(AreasHospital a : this.areasHospital)
+                    System.out.println(a.getNombre());
+                break;
+            }
+            case 2:{
+                for(AreasHospital a : this.areasHospital)
+                    for(Enfermera b : a.getEnfermerasArea())
+                        b.mostrarEnfermera();
+                break;
+            }
+            default: System.out.println("Nashe");
+        }
         /*
         for(Enfermera a : this.enfermerasCodigo.values()){
             a.mostrarEnfermera();
@@ -213,7 +224,7 @@ public class Hospital{
     }
     
     public void cargarDatos(){
-        File archivo = new File("C:\\Users\\vicen\\OneDrive\\Documentos\\GitHub\\ProyectoGrupo23\\src\\main\\java\\Proyecto_progra\\Enfermeras.txt");
+        File archivo = new File("Enfermeras.txt");
         int numeroClave=0;
         try {
             BufferedReader entrada = new BufferedReader( new FileReader(archivo));

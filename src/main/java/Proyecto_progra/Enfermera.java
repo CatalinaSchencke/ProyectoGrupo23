@@ -20,11 +20,17 @@ public class Enfermera {
     }
     
     public void mostrarEnfermera(){
-        System.out.println(this.nombre);
-        System.out.println(this.salarioPorSemana);
-        System.out.println(this.disponibilidad);
-        System.out.println(this.turno);
-        System.out.println(this.codigo);
+        System.out.println("Nombre: "+this.nombre);
+        System.out.println("Salario Actual: "+this.salarioPorSemana);
+        if (this.disponibilidad==true){
+            System.out.println("Disponibilidad Inmediata: Si");
+        }
+        else{
+            System.out.println("Disponibilidad Inmediata: No");
+        }
+        System.out.println("Turno: "+this.turno);
+        System.out.println("Codigo Asignado: "+this.codigo);
+        System.out.println(" ");
         /*int i = 0;
         for (IngSalEnfermeras horario : this.IngresoSalida){
             System.out.println(horario.horaEntrada);
