@@ -36,30 +36,34 @@ public class Hospital{
             
             
             System.out.println("1. Agregar Enfermera.");
-            System.out.println("2. Mostrar Todo.");
-            System.out.println("3. Buscar Enfermera.");
-            System.out.println("4. Cambiar Turno y/o Disponibilidad ");
+            System.out.println("2. Agregar Horario.");
+            System.out.println("3. Mostrar Areas.");
+            System.out.println("4. Mostrar Enfermeras.");
+            System.out.println("5. Mostrar Horarios de Enfermeras.");
+            System.out.println("6. Buscar Enfermera.");
+            System.out.println("7. Cambiar Turno y/o Disponibilidad.");
             System.out.println("0. Salir");
             System.out.println("Seleccione el numero para operar:");
             
             numero=Integer.parseInt(entrada.readLine());
             switch(numero){
                 case 1: agregarEnfermera(); break;
-                case 2: mostrarTodo(); break;
-                case 3: {
+                case 2: agregarHorario(); break;
+                case 3: mostrarListadoAreas(); break;
+                case 4: mostrarListadoEnfermeras(); break;
+                case 5: mostrarHorarios(); break;
+                case 6: {
                     System.out.println("Ingrese numero Codigo o Nombre de la enfermera:");
                     String dato=entrada.readLine();
                     if (isNumeric(dato)==true) buscarEnfermera(Integer.parseInt(dato));
                     else buscarEnfermera(dato);
                 }
-                case 4:{
+                case 7:{
                     int numero2 = -1;
                     while(numero2 != 0){
                         System.out.println("-----------------------------------------");
                         System.out.println("     Seleccione que cambio desea hacer");
                         System.out.println("-----------------------------------------");
-
-
                         System.out.println("1. Modificar Turno.");
                         System.out.println("2. Modificar Disponibilidad.");
                         System.out.println("3. Modificar Turno y Disponibilidad.");
@@ -145,16 +149,34 @@ public class Hospital{
                             default: System.out.println("Opcion no valida."); break;
                         }
                     }
-        
-                   
-                
-                
                 } 
                 case 0: break;
                 default: System.out.println("Opcion no valida."); break;
             }
             
         }
+    }
+    
+    public void agregarHorario() throws IOException{
+        BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
+        String dato;
+        do{
+            System.out.println("Ingrese Nombre de la enfermera");
+            dato = entrada.readLine();
+            
+        }while(this.enfermerasNombre.get(dato)==null);
+        if (this.enfermerasNombre.get(dato).tieneHorario()==false){
+            for (int i=0;i<7;i++){
+                int horaEntrada, horaSalida;
+                System.out.println("Hora de Entrada Dia (De 1 a 24)"+(i+1));
+                horaEntrada=Integer.parseInt(entrada.readLine());
+                System.out.println("Hora de Salida Dia (De 1 a 24)"+(i+1));
+                horaSalida=Integer.parseInt(entrada.readLine());
+                this.enfermerasNombre.get(dato).agregarHorario(horaEntrada,horaSalida);
+            }
+        }else System.out.println("Ya tiene un Horario.");
+        
+        
     }
     public void agregarEnfermera() throws IOException{
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
@@ -170,9 +192,8 @@ public class Hospital{
             if (cont==3)return;
         }while(this.enfermerasNombre.containsKey(dato) == true);
         
-        Enfermera nurse = new Enfermera();
-        nurse.setNombre(dato);
-
+        Enfermera nurse = new Enfermera(dato);
+        
         System.out.println("Ingrese disponibilidad (true / false )");
         dato=entrada.readLine();
         if (dato.equals(true)) nurse.setDisponibilidad(true);
@@ -182,49 +203,42 @@ public class Hospital{
         dato=entrada.readLine();
         nurse.setTurno(dato);
         
-        System.out.println("Ingrese el area al que pertenece");
+        System.out.println("Ingrese el area al que pertenece(Todo con Mayusculas)");
         do{
             dato=entrada.readLine();
             if (buscarArea(dato) == false){
                 System.out.println("No se puede ingresar una nueva area a la base de datos, por favor intente nuevamente");
             }
-        }while(this.enfermerasNombre.containsKey(dato) == true);
+            else break;
+        }while(this.enfermerasNombre.containsKey(dato) == false);
+        int max=0;
+        for (int i : this.enfermerasCodigo.keySet()) if (i > max) max = i;
+        nurse.setCodigo(max+1);
+        
         //agregar a la lista
         this.areasHospital.get(obtenerIndex(dato)).agregarListaEnfermeras(nurse);
         //agregar al mapa
         this.enfermerasNombre.put(nurse.getNombre(), nurse);
+        this.enfermerasCodigo.put(nurse.getCodigo(), nurse);
       
     }
-    public void mostrarTodo()throws IOException{
-        BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));       
-        System.out.println("1. Mostrar Areas.");
-        System.out.println("2. Mostrar Enfermeras.");
-        switch(Integer.parseInt(entrada.readLine())){
-            case 1:{
-                for(AreasHospital a : this.areasHospital)
-                    System.out.println(a.getNombre());
-                break;
-            }
-            case 2:{
-                for(AreasHospital a : this.areasHospital)
-                    for(Enfermera b : a.getEnfermerasArea())
-                        b.mostrarEnfermera();
-                break;
-            }
-            default: System.out.println("Nashe");
+    
+    public void mostrarListadoAreas(){
+        for(AreasHospital areas : this.areasHospital)
+            areas.mostrarArea();
+    }
+    public void mostrarListadoEnfermeras(){
+        for(Enfermera enfermera : this.enfermerasNombre.values())
+            enfermera.mostrarEnfermera();
+    }
+    public void mostrarHorarios(){
+        for(Enfermera enfermera : this.enfermerasNombre.values()){
+            enfermera.mostrarHorario();
         }
-        /*
-        for(Enfermera a : this.enfermerasCodigo.values()){
-            a.mostrarEnfermera();
-        }
-        
-        for(Enfermera a : this.enfermerasNombre.values()){
-            a.mostrarEnfermera();
-        }*/
     }
     
     public void cargarDatos(){
-        File archivo = new File("Enfermeras.txt");
+        File archivo = new File("C:\\Users\\lucas\\Desktop\\Universidad\\Programacion General\\Java\\Proyecto_Progra\\ProyectoGrupo23\\src\\main\\java\\Proyecto_progra\\Enfermeras.txt");
         int numeroClave=0;
         try {
             BufferedReader entrada = new BufferedReader( new FileReader(archivo));
@@ -232,9 +246,7 @@ public class Hospital{
             while(lectura != null){
                 
                 String[] parts=lectura.split(",");
-                Enfermera enfermera= new Enfermera();
-                
-                enfermera.setNombre(parts[1]);
+                Enfermera enfermera= new Enfermera(parts[1]);
                 enfermera.setCodigo(100+numeroClave);
                 enfermera.setTurno(parts[2]);
                 

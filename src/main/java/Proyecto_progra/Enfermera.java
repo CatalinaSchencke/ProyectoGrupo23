@@ -10,13 +10,10 @@ public class Enfermera {
     private int codigo;
     
     public Enfermera(){}
-    public Enfermera(String nombre, int salarioPorSemana, boolean disponibilidad, String turno, int codigo) {
+    public Enfermera(String nombre) {
         this.nombre = nombre;
         this.IngresoSalida = new ArrayList<>();
-        this.salarioPorSemana = salarioPorSemana; 
-        this.disponibilidad = disponibilidad;
-        this.turno = turno;
-        this.codigo = codigo;
+        
     }
     
     public void mostrarEnfermera(){
@@ -31,13 +28,28 @@ public class Enfermera {
         System.out.println("Turno: "+this.turno);
         System.out.println("Codigo Asignado: "+this.codigo);
         System.out.println(" ");
-        /*int i = 0;
-        for (IngSalEnfermeras horario : this.IngresoSalida){
-            System.out.println(horario.horaEntrada);
-            System.out.println(horario.horaEntrada);
-            System.out.println("Dia "+i);
+    }
+    public void mostrarHorario(){
+        int i = 0;
+        System.out.println(this.nombre);
+        if (tieneHorario()==false) System.out.println("No existe un Horario");
+        else{
+            for (IngSalEnfermeras horario : this.IngresoSalida){
+                System.out.println("Dia "+i);
+                System.out.println(horario.getHoraSalida());
+                System.out.println(horario.getHoraEntrada());
+            
             i++;
-        }*/
+            }
+        }
+    }
+    public void agregarHorario(int horaEntrada, int horaSalida){
+        IngSalEnfermeras dia = new IngSalEnfermeras(horaEntrada,horaSalida);
+        this.IngresoSalida.add(dia);
+    }
+    public boolean tieneHorario(){
+        if (this.IngresoSalida.size()==0) return false;
+        else return true;
     }
     
     public int getCodigo() {

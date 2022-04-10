@@ -1,8 +1,8 @@
 package Proyecto_progra;
 
 public class IngSalEnfermeras {
-    int horaEntrada;
-    int horaSalida;
+    private int horaEntrada;
+    private int horaSalida;
     
     public IngSalEnfermeras(){}
     public IngSalEnfermeras(int horaEntrada, int horaSalida) {
