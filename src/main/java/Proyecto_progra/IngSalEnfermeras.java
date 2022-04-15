@@ -25,7 +25,4 @@ public class IngSalEnfermeras {
     public void setHoraSalida(int horaSalida) {
         this.horaSalida = horaSalida;
     }
-    
-    
-    
 }

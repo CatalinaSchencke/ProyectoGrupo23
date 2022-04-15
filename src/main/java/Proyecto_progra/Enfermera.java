@@ -91,6 +91,4 @@ public class Enfermera {
     public void setTurno(String turno) {
         this.turno = turno;
     }
-    
-
 }
