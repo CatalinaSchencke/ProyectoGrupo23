@@ -11,8 +11,8 @@ public class Hospital{
     
     public Hospital(){}
     public Hospital(String nombre) {
-        this.areasHospital = new ArrayList<>();
         this.nombre = nombre;
+        this.areasHospital = new ArrayList<>();
         this.enfermerasCodigo = new HashMap<>();
         this.enfermerasNombre = new HashMap<>();
     }
@@ -24,7 +24,7 @@ public class Hospital{
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    
+    /*Menus implementados*/
     public void menuHospital()throws IOException{
         cargarDatos();
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));       
@@ -147,7 +147,70 @@ public class Hospital{
             }            
         }
     }
+    public void menuModificar()throws IOException{
+        cargarDatos();//Eliminar despues esta linea, sino se carga 2 veces xdd
+        int numero2 = -1;    
+        BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));       
+        while(numero2 != 0){        
+            System.out.println("-----------------------------------------");            
+            System.out.println("     Seleccione que cambio desea hacer");
+            System.out.println("-----------------------------------------");           
+            System.out.println("1. Eliminar Enfermera de Area");
+            System.out.println("2. Eliminar Enfermera de Hospital");            
+            System.out.println("3. Cambiar Nombre de Area");
+            System.out.println("0. Salir");            
+            System.out.println("Seleccione el numero para operar:");
 
+            
+                     
+            numero2=Integer.parseInt(entrada.readLine());
+            switch(numero2){           
+                case 1: eliminarEnfermeraArea();break;
+                case 2: eliminarEnfermeraHospital();break;
+                case 3: cambiarNombreArea();break;
+                case 4: mostrarListadoAreas();break;
+                case 5: mostrarListadoEnfermeras(); break;
+                case 0: break;
+                default: System.out.println("Opcion no valida."); break;   
+            }
+        }
+    }
+    /*Eliminar de las colecciones*/
+    public void eliminarEnfermeraArea()throws IOException{
+        BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));  
+        System.out.println("Ingrese Area de enfermera a eliminar:");
+        String aux = entrada.readLine();
+        for (int i=0;i<areasHospital.size();i++){
+            if (areasHospital.get(i).getNombre().equals(aux)){
+                do{
+                    System.out.println("Ingrese nombre de enfermera a eliminar");
+                    aux = entrada.readLine();
+                    if (areasHospital.get(i).existeEnfermera(aux)==true)break;
+                }while(true==true);
+                areasHospital.get(i).eliminarListaEnfermeras(aux);
+                System.out.println("Eliminado correctamente.");
+            }
+        }
+    }
+    public void eliminarEnfermeraHospital()throws IOException{
+        BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));  
+        String aux;
+        do{
+            System.out.println("Ingrese nombre de enfermera a eliminar");
+            aux = entrada.readLine();
+            if (enfermerasNombre.containsKey(aux)==true)break;
+        }while(true==true);
+        Enfermera ee = enfermerasNombre.remove(aux);
+        enfermerasCodigo.remove(ee.getCodigo());
+        for (int i=0;i<areasHospital.size();i++){
+            if(areasHospital.get(i).existeEnfermera(aux)){
+                areasHospital.get(i).eliminarListaEnfermeras(aux);
+                
+            }
+        }
+        System.out.println("Eliminado correctamente.");
+    }
+    /*Agregar a las colecciones*/
     public void agregarArea() throws IOException {
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
         String dato;
@@ -225,7 +288,7 @@ public class Hospital{
         this.enfermerasCodigo.put(nurse.getCodigo(), nurse);
       
     }
-    
+    /*Mostrar las colecciones*/
     public void mostrarListadoAreas() throws IOException{
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
         String dato;
@@ -272,6 +335,8 @@ public class Hospital{
                 if(buscarArea(parts[0])==false || this.areasHospital.size()==13){
                     AreasHospital area= new AreasHospital(parts[0]);
                     this.areasHospital.add(area);
+                    int index = obtenerIndex(parts[0]);
+                    this.areasHospital.get(index).agregarListaEnfermeras(enfermera);
                 }else{
                     int index = obtenerIndex(parts[0]);
                     this.areasHospital.get(index).agregarListaEnfermeras(enfermera);
@@ -305,6 +370,20 @@ public class Hospital{
         return i;
     }
     
+    /*Modificar las colecciones*/
+    public void cambiarNombreArea()throws IOException{
+        BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
+        System.out.println("Nombre del Area a cambiar:");
+        String nombre = entrada.readLine();
+        for (int i=0;i<areasHospital.size();i++){
+            if (areasHospital.get(i).getNombre().equals(nombre)){
+                System.out.println("Nuevo nombre:");
+                nombre = entrada.readLine();
+                areasHospital.get(i).setNombre(nombre);
+            }
+            
+        }
+    }
     public void cambioTurnoEnfermera(Enfermera enfermera, String turno){
         System.out.println("Información de la enfermera Inicial"); 
         enfermera.mostrarEnfermera();
@@ -328,6 +407,7 @@ public class Hospital{
         enfermera.mostrarEnfermera();
     }
     
+    /*Metodos asociados a las funciones*/
     public Enfermera retornarEnfermera (int codigo){
         
         if(this.enfermerasCodigo.containsKey(codigo)==true){
