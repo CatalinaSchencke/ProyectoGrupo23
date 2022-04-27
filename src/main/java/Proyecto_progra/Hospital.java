@@ -61,6 +61,7 @@ public class Hospital{
                     else buscarEnfermera(dato);
                 }
                 case 8: menuTurnoDisponibilidad();break;
+                case 9: exportarReporte(); break;
                 case 0: break;
                 default: System.out.println("Opcion no valida."); break;
             }
@@ -315,6 +316,7 @@ public class Hospital{
         }
     }
     
+    /*Uso de datos*/
     public void cargarDatos(){
         File archivo = new File("Enfermeras.txt");
         int numeroClave=0;
@@ -353,6 +355,21 @@ public class Hospital{
             ex.printStackTrace(System.out);
         }   
     }
+    
+    public void exportarReporte(){
+        ManejoArchivos.crearArchivo("Reporte.txt");
+        
+        for(int i=0; i<areasHospital.size(); i++){
+            AreasHospital aux = areasHospital.get(i);
+            ManejoArchivos.anexarArchivo("Reporte.txt", "-------" + aux.getNombre() + "-------");
+            for (int k=0; k<aux.obtenerSize(); k++){
+                Enfermera ef= aux.obtenerEnfermera(k);
+                ManejoArchivos.anexarArchivo("Reporte.txt", ef.getNombre()+ ", " + ef.getTurno() + ", " + ef.getCodigo());
+            }  
+            ManejoArchivos.anexarArchivo("Reporte.txt", " ");
+        }
+    }
+    
     public boolean buscarArea(String nombreArea){
         for (AreasHospital area : this.areasHospital){
             if (area.getNombre().equals(nombreArea)){

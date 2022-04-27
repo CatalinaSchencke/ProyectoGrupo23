@@ -1,0 +1,28 @@
+-------PEDIATRIA-------
+Carolina Bello, dia, 100
+Unai Valle, dia, 108
+Alexis Rovira, noche, 110
+Jacqueline Juarez, dia, 112
+Nazaret Estrada, noche, 116
+ 
+-------OBSTETRICIA-------
+Candelaria Bustamante, noche, 101
+Concepcio Tudela, noche, 104
+Jose-Maria Ribes, dia, 111
+Roger Jerez, dia, 115
+Rachid Peris, dia, 119
+ 
+-------GERIATRIA-------
+Hector Novoa, dia, 102
+Antonia Sanjuan, dia, 103
+Iluminada Ortiz, noche, 107
+George Salinas, noche, 114
+Driss Mestre, dia, 118
+ 
+-------SALUD MENTAL-------
+Sandra Ferreira, dia, 105
+Domingo Torres, noche, 106
+Patricia Castro, noche, 109
+Thais Camara, dia, 113
+Paulina De-La-Torre, noche, 117
+ 

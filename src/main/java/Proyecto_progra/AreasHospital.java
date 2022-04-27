@@ -23,6 +23,14 @@ public class AreasHospital {
     public void agregarListaEnfermeras (Enfermera enfermera){
         this.enfermerasArea.add(enfermera);
     }
+    
+    public Enfermera obtenerEnfermera( int index){ 
+        return enfermerasArea.get(index);
+    }
+    
+    public int obtenerSize(){
+        return enfermerasArea.size();
+    }
     public void eliminarListaEnfermeras (String nombre){
         for (int i=0;i<this.enfermerasArea.size();i++){
             if (this.enfermerasArea.get(i).getNombre().equals(nombre)){
