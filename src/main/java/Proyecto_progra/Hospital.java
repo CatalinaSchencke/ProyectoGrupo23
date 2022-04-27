@@ -43,6 +43,7 @@ public class Hospital{
             System.out.println("6. Mostrar Horarios de Enfermeras.");
             System.out.println("7. Buscar Enfermera.");
             System.out.println("8. Cambiar Turno y/o Disponibilidad.");
+            System.out.println("9. Generar Reporte.");
             System.out.println("0. Salir.");
             System.out.println("Seleccione el numero para operar:");
             
@@ -368,6 +369,7 @@ public class Hospital{
             }  
             ManejoArchivos.anexarArchivo("Reporte.txt", " ");
         }
+         System.out.println("Se exporto exitosamente");
     }
     
     public boolean buscarArea(String nombreArea){
