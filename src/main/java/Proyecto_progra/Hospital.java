@@ -44,6 +44,8 @@ public class Hospital{
             System.out.println("7. Buscar Enfermera.");
             System.out.println("8. Cambiar Turno y/o Disponibilidad.");
             System.out.println("9. Generar Reporte.");
+            System.out.println("10. Eliminar Enfermera de un Area.");
+            System.out.println("11. Eliminar Area.");
             System.out.println("0. Salir.");
             System.out.println("Seleccione el numero para operar:");
             
@@ -63,6 +65,8 @@ public class Hospital{
                 }
                 case 8: menuTurnoDisponibilidad();break;
                 case 9: exportarReporte(); break;
+                case 10:  eliminarEnfermeraArea(); break;
+                case 11: eliminarArea(); break;
                 case 0: break;
                 default: System.out.println("Opcion no valida."); break;
             }
@@ -211,6 +215,22 @@ public class Hospital{
             }
         }
         System.out.println("Eliminado correctamente.");
+    }
+     public void eliminarArea()throws IOException{
+        BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));  
+        String aux;
+            
+            System.out.println("Ingrese nombre de area");
+            aux = entrada.readLine();
+            for (int i=0; i<areasHospital.size();i++){
+                if (areasHospital.get(i).getNombre().equals(aux)==true) {
+                   areasHospital.remove(i);
+                  System.out.println("Eliminado correctamente.");
+                  return;
+                }
+            }
+            System.out.println("El area no existe, retornando a menu...");
+
     }
     /*Agregar a las colecciones*/
     public void agregarArea() throws IOException {
