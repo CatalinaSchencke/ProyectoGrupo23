@@ -216,7 +216,7 @@ public class Hospital{
         }
         System.out.println("Eliminado correctamente.");
     }
-     public void eliminarArea()throws IOException{
+    public void eliminarArea()throws IOException{
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));  
         String aux;
             
@@ -336,8 +336,7 @@ public class Hospital{
             enfermera.mostrarHorario();
         }
     }
-    
-    /*Uso de datos*/
+    /*Uso de datos de Archivos*/
     public void cargarDatos(){
         File archivo = new File("Enfermeras.txt");
         int numeroClave=0;
@@ -376,7 +375,6 @@ public class Hospital{
             ex.printStackTrace(System.out);
         }   
     }
-    
     public void exportarReporte(){
         ManejoArchivos.crearArchivo("Reporte.txt");
         
@@ -391,24 +389,6 @@ public class Hospital{
         }
          System.out.println("Se exporto exitosamente");
     }
-    
-    public boolean buscarArea(String nombreArea){
-        for (AreasHospital area : this.areasHospital){
-            if (area.getNombre().equals(nombreArea)){
-                return true;
-            }
-        }
-        return false;
-    }
-    public int obtenerIndex(String nombreArea){
-        int i;
-        for (i=0;i<this.areasHospital.size();i++){
-            if (this.areasHospital.get(i).getNombre().equals(nombreArea))
-                return i;
-        } 
-        return i;
-    }
-    
     /*Modificar las colecciones*/
     public void cambiarNombreArea()throws IOException{
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
@@ -445,7 +425,30 @@ public class Hospital{
         System.out.println("Información de la enfermera Modificada"); 
         enfermera.mostrarEnfermera();
     }
-    
+    /*Buscar en las colecciones*/
+    public void buscarEnfermera(int codigo){
+        Enfermera enfermera;
+        if(this.enfermerasCodigo.containsKey(codigo)==true){
+            enfermera=this.enfermerasCodigo.get(codigo);
+            enfermera.mostrarEnfermera();
+        }else System.out.println("No existe ese codigo de enfermera");
+    }
+    public void buscarEnfermera(String nombre){
+        Enfermera enfermera;
+        
+        if(this.enfermerasNombre.containsKey(nombre)==true){
+            enfermera=this.enfermerasNombre.get(nombre);
+            enfermera.mostrarEnfermera();
+        }else System.out.println("Nombre de enfermera no encontrado");
+    }
+    public boolean buscarArea(String nombreArea){
+        for (AreasHospital area : this.areasHospital){
+            if (area.getNombre().equals(nombreArea)){
+                return true;
+            }
+        }
+        return false;
+    }
     /*Metodos asociados a las funciones*/
     public Enfermera retornarEnfermera (int codigo){
         
@@ -468,23 +471,6 @@ public class Hospital{
         }
         return null ;
     }
-    
-    public void buscarEnfermera(int codigo){
-        Enfermera enfermera;
-        if(this.enfermerasCodigo.containsKey(codigo)==true){
-            enfermera=this.enfermerasCodigo.get(codigo);
-            enfermera.mostrarEnfermera();
-        }else System.out.println("No existe ese codigo de enfermera");
-    }
-    public void buscarEnfermera(String nombre){
-        Enfermera enfermera;
-        
-        if(this.enfermerasNombre.containsKey(nombre)==true){
-            enfermera=this.enfermerasNombre.get(nombre);
-            enfermera.mostrarEnfermera();
-        }else System.out.println("Nombre de enfermera no encontrado");
-    }
-    
     private static boolean isNumeric (String cadena){
         boolean result;
         try{
@@ -494,5 +480,13 @@ public class Hospital{
             result = false;
         }
         return result;
+    }
+    public int obtenerIndex(String nombreArea){
+        int i;
+        for (i=0;i<this.areasHospital.size();i++){
+            if (this.areasHospital.get(i).getNombre().equals(nombreArea))
+                return i;
+        } 
+        return i;
     }
 }
