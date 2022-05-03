@@ -44,6 +44,14 @@ public class AreasHospital {
             this.enfermerasArea.get(i).mostrarEnfermera();
         }
     }
+    
+    public void mostrarArea (boolean disponibilidad){
+        System.out.println(this.nombre);
+        for (int i = 0; i < this.enfermerasArea.size(); i++) {
+            if( this.enfermerasArea.get(i).isDisponibilidad() ==disponibilidad)this.enfermerasArea.get(i).mostrarEnfermera();
+        }
+    }
+
     public boolean existeEnfermera(String nombre){
         for (int i=0;i<this.enfermerasArea.size();i++){
             if (this.enfermerasArea.get(i).getNombre().equals(nombre)){
