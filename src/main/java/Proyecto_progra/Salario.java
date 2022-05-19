@@ -10,7 +10,7 @@ package Proyecto_progra;
  * @author vicen
  */
 public abstract class Salario {
-    private int asdhfjgadsf;
-    public abstract int calcularSueldo( int horas);
+    private int tipoContrato;
+    public abstract int calcularSueldo( double horas);
     
 }

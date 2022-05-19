@@ -11,7 +11,7 @@ package Proyecto_progra;
  */
 public class Honorario extends Salario {
     
-    public int calcularSueldo( int horas){
+    public int calcularSueldo( double horas){
     
         return 1;
     }
