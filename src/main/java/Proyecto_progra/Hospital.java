@@ -4,8 +4,8 @@ import java.io.*;
 import java.util.*;
 
 public class Hospital{
-    private ArrayList<AreasHospital> areasHospital ;
     private String nombre;
+    private ArrayList<AreasHospital> areasHospital ;
     private HashMap<Integer,Enfermera> enfermerasCodigo;
     private HashMap<String,Enfermera> enfermerasNombre;
     
@@ -29,6 +29,9 @@ public class Hospital{
         cargarDatos();
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));       
         int numero = -1;
+        int aux = 0;
+        boolean flagCalculo = false;
+        
         while(numero != 0){
             System.out.println("-----------------------------------------");
             System.out.println("          Bienvenido al Hospital");
@@ -55,8 +58,19 @@ public class Hospital{
                 case 2: agregarArea(); break;
                 case 3: mostrarListadoAreas();break;
                 case 4: mostrarListadoEnfermeras(); break;
-                case 5: marcarEntrada();break;
-                case 6: marcarSalida();break;
+                case 5: {
+                    marcarEntrada();
+                    aux=1;
+                    break;
+                }
+                case 6: {
+                    if (aux==1){
+                        marcarSalida();
+                        flagCalculo=true;
+                    }
+                    break;
+                    
+                }
                 case 7: {
                     System.out.println("Ingrese numero Codigo o Nombre de la enfermera:");
                     String dato=entrada.readLine();
@@ -66,7 +80,14 @@ public class Hospital{
                 case 8: menuTurnoDisponibilidad();break;
                 case 9: exportarReporte(); break;
                 case 10: menuModificar(); break;
-                case 11: generarSalario(); break;
+                case 11: {
+                    if (flagCalculo==true){
+                        generarSalario();
+                        flagCalculo=false;
+                    }  
+                    else System.out.println("Primero marque la salida de su ultimo turno antes de calcular.");
+                    break;
+                } 
                 case 0: break;
                 default: System.out.println("Opcion no valida."); break;
             }
@@ -288,6 +309,16 @@ public class Hospital{
         this.enfermerasCodigo.put(nurse.getCodigo(), nurse);
       
     }
+    public void modificarEnMapasListas(Enfermera enf){
+        enfermerasCodigo.put(enf.getCodigo(), enf);
+        enfermerasNombre.put(enf.getNombre(), enf);
+        for (int i=0;i<areasHospital.size();i++){
+            if(areasHospital.get(i).existeEnfermera(enf.getNombre())){
+                areasHospital.get(i).eliminarListaEnfermeras(enf.getNombre());
+                areasHospital.get(i).agregarListaEnfermeras(enf);
+            }
+        }
+    }
     /*Mostrar las colecciones*/
     public void mostrarListadoAreas() throws IOException{
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
@@ -309,17 +340,22 @@ public class Hospital{
         for(Enfermera enfermera : this.enfermerasNombre.values())
             enfermera.Mostrar();
     }
-
-    
+    //Marcar Entrada y Salida
     public void marcarEntrada() throws IOException{
         System.out.println("Ingrese Codigo o Nombre de la Enfermera");
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
         String dato=entrada.readLine();
         if (isNumeric(dato)){
             int datoInt = Integer.parseInt(dato);
-            retornarEnfermera(datoInt).marcarEntrada();
+            Enfermera enf= retornarEnfermera(datoInt);
+            enf.marcarEntrada();
+            modificarEnMapasListas(enf);   
         }
-        else retornarEnfermera(dato).marcarEntrada();
+        else {
+            Enfermera enf = retornarEnfermera(dato);
+            enf.marcarEntrada();
+            modificarEnMapasListas(enf);
+        }
         
     }
     public void marcarSalida() throws IOException{
@@ -328,20 +364,31 @@ public class Hospital{
         String dato=entrada.readLine();
         if (isNumeric(dato)){
             int datoInt = Integer.parseInt(dato);
-            retornarEnfermera(datoInt).marcarSalida();
+            Enfermera enf= retornarEnfermera(datoInt);
+            enf.marcarSalida();
+            modificarEnMapasListas(enf);
         }
-        else retornarEnfermera(dato).marcarSalida();
+        else {
+            Enfermera enf = retornarEnfermera(dato);
+            enf.marcarSalida();
+            modificarEnMapasListas(enf);
+        }
     }
-    
     public void generarSalario() throws IOException{
         System.out.println("Ingrese Codigo o Nombre de la Enfermera");
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
         String dato=entrada.readLine();
         if (isNumeric(dato)){
             int datoInt = Integer.parseInt(dato);
-            retornarEnfermera(datoInt).mostrarSalario();
+            Enfermera enf = retornarEnfermera(datoInt);
+            enf.mostrarSalario();
+            modificarEnMapasListas(enf);
         }
-        else retornarEnfermera(dato).mostrarSalario();
+        else {
+            Enfermera enf = retornarEnfermera(dato);
+            enf.mostrarSalario();
+            modificarEnMapasListas(enf);
+        }
     }
     /*Uso de datos de Archivos*/
     public void cargarDatos(){
@@ -458,24 +505,15 @@ public class Hospital{
     }
     /*Metodos asociados a las funciones*/
     public Enfermera retornarEnfermera (int codigo){
+        if(enfermerasCodigo.containsKey(codigo)==true)return enfermerasCodigo.get(codigo);
+        else System.out.println("No existe ese codigo de enfermera");
         
-        if(this.enfermerasCodigo.containsKey(codigo)==true){
-            Enfermera enfermera;
-            enfermera=this.enfermerasCodigo.get(codigo);
-            return this.enfermerasCodigo.get(codigo);
-        }else {
-            System.out.println("No existe ese codigo de enfermera");
-        }
         return null ;
     }
     public Enfermera retornarEnfermera (String nombre){
-        if(this.enfermerasNombre.containsKey(nombre)==true){
-            Enfermera enfermera;
-            enfermera=this.enfermerasNombre.get(nombre);
-            return this.enfermerasNombre.get(nombre);
-        }else {
-            System.out.println("No existe ese nombre de enfermera");
-        }
+        if(enfermerasNombre.containsKey(nombre)==true)return enfermerasNombre.get(nombre);
+        else System.out.println("No existe ese nombre de enfermera");
+        
         return null ;
     }
     private static boolean isNumeric (String cadena){

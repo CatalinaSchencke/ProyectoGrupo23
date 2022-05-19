@@ -17,6 +17,8 @@ public class Enfermera implements MostrarDatos{
         sueldo=0;
     }
     public Enfermera(String nombre) {
+        horasTrabajadas=0;
+        sueldo=0;
         this.nombre = nombre;
         horasDiarias=new IngSalEnfermeras();
     }
