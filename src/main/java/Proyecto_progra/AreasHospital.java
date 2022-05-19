@@ -2,7 +2,7 @@ package Proyecto_progra;
 /*Usar lista para guardar a las 4 enfermeras por area*/
 import java.util.*;
 
-public class AreasHospital {
+public class AreasHospital implements MostrarDatos{
     private ArrayList<Enfermera> enfermerasArea ;
     private String nombre;
     
@@ -38,17 +38,17 @@ public class AreasHospital {
             }
         }
     }
-    public void mostrarArea (){
+    public void Mostrar (){
         System.out.println(this.nombre);
         for (int i = 0; i < this.enfermerasArea.size(); i++) {
-            this.enfermerasArea.get(i).mostrarEnfermera();
+            this.enfermerasArea.get(i).Mostrar();
         }
     }
     
-    public void mostrarArea (boolean disponibilidad){
+    public void Mostrar (boolean disponibilidad){
         System.out.println(this.nombre);
         for (int i = 0; i < this.enfermerasArea.size(); i++) {
-            if( this.enfermerasArea.get(i).isDisponibilidad() ==disponibilidad)this.enfermerasArea.get(i).mostrarEnfermera();
+            if( this.enfermerasArea.get(i).isDisponibilidad() ==disponibilidad)this.enfermerasArea.get(i).Mostrar();
         }
     }
 

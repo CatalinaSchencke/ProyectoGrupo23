@@ -1,7 +1,7 @@
 package Proyecto_progra;
 import java.util.*;
 
-public class Enfermera {
+public class Enfermera implements MostrarDatos{
     private String nombre;
     private boolean disponibilidad;
     private String turno;
@@ -9,12 +9,15 @@ public class Enfermera {
     private int sueldo;
     private String contrato;
     private int horasTrabajadas;
+    
+   
+    
     public Enfermera(){}
     public Enfermera(String nombre) {
         this.nombre = nombre;   
     }
     
-    public void mostrarEnfermera(){
+    public void Mostrar(){
         System.out.println("Nombre: "+this.nombre);
         if (this.disponibilidad==true){
             System.out.println("Disponibilidad Inmediata: Si");
