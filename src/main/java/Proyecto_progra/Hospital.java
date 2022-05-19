@@ -51,11 +51,11 @@ public class Hospital{
             numero=Integer.parseInt(entrada.readLine());
             switch(numero){
                 case 1: agregarEnfermera(); break;
-                case 2: agregarHorario(); break;
+                case 2: ; break;
                 case 3: agregarArea();break;
                 case 4: mostrarListadoAreas(); break;
                 case 5: mostrarListadoEnfermeras(); break;
-                case 6: mostrarHorarios(); break;
+                case 6: ; break;
                 case 7: {
                     System.out.println("Ingrese numero Codigo o Nombre de la enfermera:");
                     String dato=entrada.readLine();
@@ -241,27 +241,7 @@ public class Hospital{
         
         this.areasHospital.add(areas);
     }
-    public void agregarHorario() throws IOException{
-        BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
-        String dato;
-        do{
-            System.out.println("Ingrese Nombre de la enfermera:");
-            dato = entrada.readLine();
-            
-        }while(this.enfermerasNombre.get(dato)==null);
-        if (this.enfermerasNombre.get(dato).tieneHorario()==false){
-            for (int i=0;i<7;i++){
-                int horaEntrada, horaSalida;
-                System.out.println("Hora de Entrada Dia "+(i+1)+"(De 1 a 24 hrs)");
-                horaEntrada=Integer.parseInt(entrada.readLine());
-                System.out.println("Hora de Salida Dia "+(i+1)+"(De 1 a 24 hrs)");
-                horaSalida=Integer.parseInt(entrada.readLine());
-                this.enfermerasNombre.get(dato).agregarHorario(horaEntrada,horaSalida);
-            }
-        }else System.out.println("Ya tiene un Horario.");
-        
-        
-    }
+
     public void agregarEnfermera() throws IOException{
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
         System.out.println("Ingrese Nombre de la enfermera");
@@ -328,11 +308,7 @@ public class Hospital{
         for(Enfermera enfermera : this.enfermerasNombre.values())
             enfermera.mostrarEnfermera();
     }
-    public void mostrarHorarios(){
-        for(Enfermera enfermera : this.enfermerasNombre.values()){
-            enfermera.mostrarHorario();
-        }
-    }
+
     /*Uso de datos de Archivos*/
     public void cargarDatos(){
         File archivo = new File("Enfermeras.txt");

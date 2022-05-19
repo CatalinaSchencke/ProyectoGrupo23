@@ -3,22 +3,19 @@ import java.util.*;
 
 public class Enfermera {
     private String nombre;
-    private ArrayList<IngSalEnfermeras> IngresoSalida;
-    private int salarioPorSemana;
     private boolean disponibilidad;
     private String turno;
     private int codigo;
-    
+    private int sueldo;
+    private String contrato;
+    private int horasTrabajadas;
     public Enfermera(){}
     public Enfermera(String nombre) {
-        this.nombre = nombre;
-        this.IngresoSalida = new ArrayList<>();
-        
+        this.nombre = nombre;   
     }
     
     public void mostrarEnfermera(){
         System.out.println("Nombre: "+this.nombre);
-        System.out.println("Salario Actual: "+this.salarioPorSemana);
         if (this.disponibilidad==true){
             System.out.println("Disponibilidad Inmediata: Si");
         }
@@ -29,29 +26,17 @@ public class Enfermera {
         System.out.println("Codigo Asignado: "+this.codigo);
         System.out.println(" ");
     }
-    public void mostrarHorario(){
-        int i = 0;
-        System.out.println(this.nombre);
-        if (tieneHorario()==false) System.out.println("No existe un Horario");
-        else{
-            for (IngSalEnfermeras horario : this.IngresoSalida){
-                System.out.println("Dia "+i);
-                System.out.println(horario.getHoraSalida());
-                System.out.println(horario.getHoraEntrada());
-            
-            i++;
-            }
+
+    public void calcularSalario(){
+        if (contrato.equals("HONORARIO")){
+            Honorario aux= new Honorario();
+            sueldo=aux.calcularSueldo(horasTrabajadas);
+        }
+        if (contrato.equals("INDEFINIDO")){
+            Contrato aux= new Contrato();
+            sueldo=aux.calcularSueldo(horasTrabajadas);
         }
     }
-    public void agregarHorario(int horaEntrada, int horaSalida){
-        IngSalEnfermeras dia = new IngSalEnfermeras(horaEntrada,horaSalida);
-        this.IngresoSalida.add(dia);
-    }
-    public boolean tieneHorario(){
-        if (this.IngresoSalida.size()==0) return false;
-        else return true;
-    }
-    
     public int getCodigo() {
         return codigo;
     }
@@ -68,13 +53,6 @@ public class Enfermera {
         this.nombre = nombre;
     }
 
-    public int getSalarioPorSemana() {
-        return salarioPorSemana;
-    }
-
-    public void setSalarioPorSemana(int salarioPorSemana) {
-        this.salarioPorSemana = salarioPorSemana;
-    }
 
     public boolean isDisponibilidad() {
         return disponibilidad;
