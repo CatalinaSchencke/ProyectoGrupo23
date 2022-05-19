@@ -36,26 +36,27 @@ public class Hospital{
             
             
             System.out.println("1. Agregar Enfermera.");
-            System.out.println("2. Agregar Horario.");
-            System.out.println("3. Agregar Area.");
-            System.out.println("4. Mostrar Areas.");
-            System.out.println("5. Mostrar Enfermeras.");
-            System.out.println("6. Mostrar Horarios de Enfermeras.");
+            System.out.println("2. Agregar Area.");
+            System.out.println("3. Mostrar Areas.");
+            System.out.println("4. Mostrar Enfermeras.");
+            System.out.println("5. Marcar Entrada.");
+            System.out.println("6. Marcar Salida.");
             System.out.println("7. Buscar Enfermera.");
             System.out.println("8. Cambiar Turno y/o Disponibilidad.");
             System.out.println("9. Generar Reporte.");
             System.out.println("10. Modificacion y Eliminacion.");
+            System.out.println("11. Generar Salario.");
             System.out.println("0. Salir.");
             System.out.println("Seleccione el numero para operar:");
             
             numero=Integer.parseInt(entrada.readLine());
             switch(numero){
                 case 1: agregarEnfermera(); break;
-                case 2: ; break;
-                case 3: agregarArea();break;
-                case 4: mostrarListadoAreas(); break;
-                case 5: mostrarListadoEnfermeras(); break;
-                case 6: ; break;
+                case 2: agregarArea(); break;
+                case 3: mostrarListadoAreas();break;
+                case 4: mostrarListadoEnfermeras(); break;
+                case 5: marcarEntrada();break;
+                case 6: marcarSalida();break;
                 case 7: {
                     System.out.println("Ingrese numero Codigo o Nombre de la enfermera:");
                     String dato=entrada.readLine();
@@ -65,6 +66,7 @@ public class Hospital{
                 case 8: menuTurnoDisponibilidad();break;
                 case 9: exportarReporte(); break;
                 case 10: menuModificar(); break;
+                case 11: generarSalario(); break;
                 case 0: break;
                 default: System.out.println("Opcion no valida."); break;
             }
@@ -241,7 +243,6 @@ public class Hospital{
         
         this.areasHospital.add(areas);
     }
-
     public void agregarEnfermera() throws IOException{
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
         System.out.println("Ingrese Nombre de la enfermera");
@@ -309,6 +310,39 @@ public class Hospital{
             enfermera.Mostrar();
     }
 
+    
+    public void marcarEntrada() throws IOException{
+        System.out.println("Ingrese Codigo o Nombre de la Enfermera");
+        BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
+        String dato=entrada.readLine();
+        if (isNumeric(dato)){
+            int datoInt = Integer.parseInt(dato);
+            retornarEnfermera(datoInt).marcarEntrada();
+        }
+        else retornarEnfermera(dato).marcarEntrada();
+        
+    }
+    public void marcarSalida() throws IOException{
+        System.out.println("Ingrese Codigo o Nombre de la Enfermera");
+        BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
+        String dato=entrada.readLine();
+        if (isNumeric(dato)){
+            int datoInt = Integer.parseInt(dato);
+            retornarEnfermera(datoInt).marcarSalida();
+        }
+        else retornarEnfermera(dato).marcarSalida();
+    }
+    
+    public void generarSalario() throws IOException{
+        System.out.println("Ingrese Codigo o Nombre de la Enfermera");
+        BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
+        String dato=entrada.readLine();
+        if (isNumeric(dato)){
+            int datoInt = Integer.parseInt(dato);
+            retornarEnfermera(datoInt).mostrarSalario();
+        }
+        else retornarEnfermera(dato).mostrarSalario();
+    }
     /*Uso de datos de Archivos*/
     public void cargarDatos(){
         File archivo = new File("Enfermeras.txt");
@@ -322,7 +356,7 @@ public class Hospital{
                 Enfermera enfermera= new Enfermera(parts[1]);
                 enfermera.setCodigo(100+numeroClave);
                 enfermera.setTurno(parts[2]);
-                
+                enfermera.setContrato(parts[3]);
                 
                 this.enfermerasCodigo.put(enfermera.getCodigo(), enfermera);
                 this.enfermerasNombre.put(enfermera.getNombre(), enfermera);

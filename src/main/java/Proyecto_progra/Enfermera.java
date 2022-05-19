@@ -12,7 +12,10 @@ public class Enfermera implements MostrarDatos{
     private IngSalEnfermeras horasDiarias;
    
     
-    public Enfermera(){}
+    public Enfermera(){
+        horasTrabajadas=0;
+        sueldo=0;
+    }
     public Enfermera(String nombre) {
         this.nombre = nombre;
         horasDiarias=new IngSalEnfermeras();
@@ -28,6 +31,7 @@ public class Enfermera implements MostrarDatos{
         }
         System.out.println("Turno: "+this.turno);
         System.out.println("Codigo Asignado: "+this.codigo);
+        System.out.println("Tipo de Contrato: "+this.contrato);
         System.out.println(" ");
     }
 
@@ -36,9 +40,19 @@ public class Enfermera implements MostrarDatos{
             Honorario aux= new Honorario();
             sueldo=aux.calcularSueldo(horasTrabajadas);
         }
-        if (contrato.equals("CONTRATADO")){
+        if (contrato.equals("INDEFINIDO")){
             Contrato aux= new Contrato();
             sueldo=aux.calcularSueldo(horasTrabajadas);
+        }
+    }
+    public void mostrarSalario(){
+        if (contrato.equals("HONORARIO")){
+            Honorario aux= new Honorario();
+            aux.mostrarSalario(horasTrabajadas);
+        }
+        if (contrato.equals("INDEFINIDO")){
+            Contrato aux= new Contrato();
+            aux.mostrarSalario(horasTrabajadas);
         }
     }
     
@@ -74,5 +88,17 @@ public class Enfermera implements MostrarDatos{
     }
     public void setTurno(String turno) {
         this.turno = turno;
+    }
+    public String getContrato() {
+        return contrato;
+    }
+    public void setContrato(String contrato) {
+        this.contrato = contrato;
+    }
+    public double getHorasTrabajadas() {
+        return horasTrabajadas;
+    }
+    public void setHorasTrabajadas(double horasTrabajadas) {
+        this.horasTrabajadas = horasTrabajadas;
     }
 }

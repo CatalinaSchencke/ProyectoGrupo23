@@ -5,12 +5,15 @@
  */
 package Proyecto_progra;
 
+
 /**
  *
  * @author vicen
  */
 public abstract class Salario {
-    private int tipoContrato;
+
     public abstract int calcularSueldo( double horas);
-    
+    public void mostrarSalario( double horas){
+        System.out.println("Aun no se puede generar Salario especifico.");
+    }
 }
