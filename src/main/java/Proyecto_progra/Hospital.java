@@ -29,8 +29,6 @@ public class Hospital{
         cargarDatos();
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));       
         int numero = -1;
-        int aux = 0;
-        boolean flagCalculo = false;
         
         while(numero != 0){
             System.out.println("-----------------------------------------");
@@ -59,19 +57,8 @@ public class Hospital{
                 case 2: agregarArea(); break;
                 case 3: mostrarListadoAreas();break;
                 case 4: mostrarListadoEnfermeras(); break;
-                case 5: {
-                    marcarEntrada();
-                    aux=1;
-                    break;
-                }
-                case 6: {
-                    if (aux==1){
-                        marcarSalida();
-                        flagCalculo=true;
-                    }
-                    break;
-                    
-                }
+                case 5: marcarEntrada();break;
+                case 6: marcarSalida();break;
                 case 7: {
                     System.out.println("Ingrese numero Codigo o Nombre de la enfermera:");
                     String dato=entrada.readLine();
@@ -81,14 +68,7 @@ public class Hospital{
                 case 8: menuTurnoDisponibilidad();break;
                 case 9: exportarReporte(); break;
                 case 10: menuModificar(); break;
-                case 11: {
-                    if (flagCalculo==true){
-                        generarSalario();
-                        flagCalculo=false;
-                    }  
-                    else System.out.println("Primero marque la salida de su ultimo turno antes de calcular.");
-                    break;
-                }
+                case 11: generarSalario();break;
                 case 12: mejorPagada(); break;
                 case 0: break;
                 default: System.out.println("Opcion no valida."); break;
@@ -383,12 +363,12 @@ public class Hospital{
         if (isNumeric(dato)){
             int datoInt = Integer.parseInt(dato);
             Enfermera enf = retornarEnfermera(datoInt);
-            enf.mostrarSalario();
+            enf.calcularSalario();
             modificarEnMapasListas(enf);
         }
         else {
             Enfermera enf = retornarEnfermera(dato);
-            enf.mostrarSalario();
+            enf.calcularSalario();
             modificarEnMapasListas(enf);
         }
     }

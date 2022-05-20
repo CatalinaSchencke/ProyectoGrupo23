@@ -51,11 +51,11 @@ public class Enfermera implements MostrarDatos{
     public void mostrarSalario(){
         if (contrato.equals("HONORARIO")){
             Honorario aux= new Honorario();
-            aux.mostrarSalario(horasTrabajadas);
+            aux.mostrarSueldo(horasTrabajadas);
         }
         if (contrato.equals("INDEFINIDO")){
             Contrato aux= new Contrato();
-            aux.mostrarSalario(horasTrabajadas);
+            aux.mostrarSueldo(horasTrabajadas);
         }
     }
     
@@ -110,7 +110,7 @@ public class Enfermera implements MostrarDatos{
     public void setHorasTrabajadas(double horasTrabajadas) {
         this.horasTrabajadas = horasTrabajadas;
     }
-    public void setSueldo(){
+    public void setSueldo(int sueldo){
         this.sueldo=sueldo;
     }
     public int getSueldo(){
