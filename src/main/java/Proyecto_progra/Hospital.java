@@ -519,17 +519,14 @@ public class Hospital{
         return i;
     }
     
-        public void mejorPagada(){
+    public void mejorPagada(){
         int aux2=0; 
         String aux1=null;
         for(int i=0; i<areasHospital.size(); i++){
             AreasHospital aux = areasHospital.get(i);
-            System.out.println("No existe ese codigo de enfermera 33");
             for (int k=0; k<aux.obtenerSize(); k++){
                 Enfermera ef= aux.obtenerEnfermera(k);
-                System.out.println("No existe ese codigo de enfermera 1");
                 if (ef.getSueldo()>aux2){
-                    //System.out.println("No existe ese codigo de enfermera 1" + ef.getSueldo());
                     aux1=ef.getNombre();
                     aux2=ef.getSueldo();
                     
