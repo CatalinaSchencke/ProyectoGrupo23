@@ -35,6 +35,7 @@ public class Enfermera implements MostrarDatos{
         System.out.println("Codigo Asignado: "+this.codigo);
         System.out.println("Tipo de Contrato: "+this.contrato);
         System.out.println(" ");
+        System.out.println(" sueldo: "+ this.sueldo);
     }
 
     public void calcularSalario(){
@@ -66,6 +67,12 @@ public class Enfermera implements MostrarDatos{
         horasTrabajadas=horasDiarias.actualizarHorasAcumuladas();
     }
     
+    
+    
+    public void enfermeraMejorPagada(){
+    
+        
+    }
     //Getter y Setter
     public int getCodigo() {
         return codigo;
@@ -102,5 +109,11 @@ public class Enfermera implements MostrarDatos{
     }
     public void setHorasTrabajadas(double horasTrabajadas) {
         this.horasTrabajadas = horasTrabajadas;
+    }
+    public void setSueldo(){
+        this.sueldo=sueldo;
+    }
+    public int getSueldo(){
+        return sueldo;
     }
 }

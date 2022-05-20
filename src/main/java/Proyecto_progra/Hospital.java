@@ -49,6 +49,7 @@ public class Hospital{
             System.out.println("9. Generar Reporte.");
             System.out.println("10. Modificacion y Eliminacion.");
             System.out.println("11. Generar Salario.");
+            System.out.println("12. Enfermera mejor pagada.");
             System.out.println("0. Salir.");
             System.out.println("Seleccione el numero para operar:");
             
@@ -87,7 +88,8 @@ public class Hospital{
                     }  
                     else System.out.println("Primero marque la salida de su ultimo turno antes de calcular.");
                     break;
-                } 
+                }
+                case 12: mejorPagada(); break;
                 case 0: break;
                 default: System.out.println("Opcion no valida."); break;
             }
@@ -503,6 +505,8 @@ public class Hospital{
         }
         return false;
     }
+
+    
     /*Metodos asociados a las funciones*/
     public Enfermera retornarEnfermera (int codigo){
         if(enfermerasCodigo.containsKey(codigo)==true)return enfermerasCodigo.get(codigo);
@@ -534,4 +538,26 @@ public class Hospital{
         } 
         return i;
     }
-}
+    
+        public void mejorPagada(){
+        int aux2=0; 
+        String aux1=null;
+        for(int i=0; i<areasHospital.size(); i++){
+            AreasHospital aux = areasHospital.get(i);
+            System.out.println("No existe ese codigo de enfermera 33");
+            for (int k=0; k<aux.obtenerSize(); k++){
+                Enfermera ef= aux.obtenerEnfermera(k);
+                System.out.println("No existe ese codigo de enfermera 1");
+                if (ef.getSueldo()>aux2){
+                    //System.out.println("No existe ese codigo de enfermera 1" + ef.getSueldo());
+                    aux1=ef.getNombre();
+                    aux2=ef.getSueldo();
+                    
+                }
+            }      
+        }
+        System.out.println("La/El enfermera(o) mejor pagado es: " + aux1 + " " + "Su sueldo es: " + aux2);
+        
+    }
+} 
+
