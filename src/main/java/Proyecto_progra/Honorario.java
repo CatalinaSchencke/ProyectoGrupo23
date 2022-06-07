@@ -11,7 +11,7 @@ public class Honorario extends Salario {
         sueldo = (int) (7500 * horas);
         return sueldo;
     }
-    public void mostrarSalario( double horas){
+    public void mostrarSueldo( double horas){
         System.out.println("Se genero un salario de " + calcularSueldo(horas) + " por honorario en base a "+  horas  + " horas trabajadas.");
     }
     

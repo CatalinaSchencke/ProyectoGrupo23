@@ -23,25 +23,24 @@ public class Enfermera implements MostrarDatos{
         horasDiarias=new IngSalEnfermeras();
     }
     
-    public String Mostrar(){
-        String s ="Nombre: "+this.nombre;
+    public void Mostrar(){
+        System.out.println("Nombre: "+this.nombre);
         if (this.disponibilidad==true){
-            s = s.concat(",Disponibilidad Inmediata: Si");
+            System.out.println("Disponibilidad Inmediata: Si");
         }
         else{
-            s = s.concat(",Disponibilidad Inmediata: Si");
+            System.out.println("Disponibilidad Inmediata: No");
         }
-        s = s.concat(",Turno: "+this.turno);
-        s = s.concat(",Codigo Asignado: "+this.codigo);
-        s = s.concat(",Tipo de Contrato: "+this.contrato);
-        s = s.concat(",");
-        return s;
-        
+        System.out.println("Turno: "+this.turno);
+        System.out.println("Codigo Asignado: "+this.codigo);
+        System.out.println("Tipo de Contrato: "+this.contrato);
+        System.out.println(" ");
+        System.out.println(" sueldo: "+ this.sueldo);
     }
 
     public void calcularSalario(){
         if (contrato.equals("HONORARIO")){
-            Salario aux= new Honorario();
+            Honorario aux= new Honorario();
             sueldo=aux.calcularSueldo(horasTrabajadas);
         }
         if (contrato.equals("INDEFINIDO")){
@@ -52,11 +51,11 @@ public class Enfermera implements MostrarDatos{
     public void mostrarSalario(){
         if (contrato.equals("HONORARIO")){
             Honorario aux= new Honorario();
-            aux.mostrarSalario(horasTrabajadas);
+            aux.mostrarSueldo(horasTrabajadas);
         }
         if (contrato.equals("INDEFINIDO")){
             Contrato aux= new Contrato();
-            aux.mostrarSalario(horasTrabajadas);
+            aux.mostrarSueldo(horasTrabajadas);
         }
     }
     
@@ -68,6 +67,12 @@ public class Enfermera implements MostrarDatos{
         horasTrabajadas=horasDiarias.actualizarHorasAcumuladas();
     }
     
+    
+    
+    public void enfermeraMejorPagada(){
+    
+        
+    }
     //Getter y Setter
     public int getCodigo() {
         return codigo;
@@ -104,5 +109,11 @@ public class Enfermera implements MostrarDatos{
     }
     public void setHorasTrabajadas(double horasTrabajadas) {
         this.horasTrabajadas = horasTrabajadas;
+    }
+    public void setSueldo(int sueldo){
+        this.sueldo=sueldo;
+    }
+    public int getSueldo(){
+        return sueldo;
     }
 }
