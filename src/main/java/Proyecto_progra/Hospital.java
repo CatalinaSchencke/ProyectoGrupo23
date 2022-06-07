@@ -16,207 +16,11 @@ public class Hospital{
         this.enfermerasCodigo = new HashMap<>();
         this.enfermerasNombre = new HashMap<>();
     }
-
     public String getNombre() {
         return nombre;
     }
-
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-    /*Menus implementados*/
-    public void menuHospital()throws IOException{
-        cargarDatos();
-        BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));       
-        int numero = -1;
-<<<<<<< HEAD
-=======
-        int aux = 0;
-        boolean flagCalculo = false;
->>>>>>> parent of bd59523 (Primeros Cambios a OO)
-        
-        while(numero != 0){
-            System.out.println("-----------------------------------------");
-            System.out.println("          Bienvenido al Hospital");
-            System.out.println("-----------------------------------------");
-            
-            
-            System.out.println("1. Agregar Enfermera.");
-            System.out.println("2. Agregar Area.");
-            System.out.println("3. Mostrar Areas.");
-            System.out.println("4. Mostrar Enfermeras.");
-            System.out.println("5. Marcar Entrada.");
-            System.out.println("6. Marcar Salida.");
-            System.out.println("7. Buscar Enfermera.");
-            System.out.println("8. Cambiar Turno y/o Disponibilidad.");
-            System.out.println("9. Generar Reporte.");
-            System.out.println("10. Modificacion y Eliminacion.");
-            System.out.println("11. Generar Salario.");
-<<<<<<< HEAD
-            System.out.println("12. Enfermera mejor pagada.");
-=======
->>>>>>> parent of bd59523 (Primeros Cambios a OO)
-            System.out.println("0. Salir.");
-            System.out.println("Seleccione el numero para operar:");
-            
-            numero=Integer.parseInt(entrada.readLine());
-            switch(numero){
-                case 1: agregarEnfermera(); break;
-                case 2: agregarArea(); break;
-                case 3: mostrarListadoAreas();break;
-                case 4: mostrarListadoEnfermeras(); break;
-<<<<<<< HEAD
-                case 5: marcarEntrada();break;
-                case 6: marcarSalida();break;
-=======
-                case 5: {
-                    marcarEntrada();
-                    aux=1;
-                    break;
-                }
-                case 6: {
-                    if (aux==1){
-                        marcarSalida();
-                        flagCalculo=true;
-                    }
-                    break;
-                    
-                }
->>>>>>> parent of bd59523 (Primeros Cambios a OO)
-                case 7: {
-                    System.out.println("Ingrese numero Codigo o Nombre de la enfermera:");
-                    String dato=entrada.readLine();
-                    if (isNumeric(dato)==true) buscarEnfermera(Integer.parseInt(dato));
-                    else buscarEnfermera(dato);
-                }
-                case 8: menuTurnoDisponibilidad();break;
-                case 9: exportarReporte(); break;
-                case 10: menuModificar(); break;
-<<<<<<< HEAD
-                case 11: generarSalario();break;
-                case 12: mejorPagada(); break;
-=======
-                case 11: {
-                    if (flagCalculo==true){
-                        generarSalario();
-                        flagCalculo=false;
-                    }  
-                    else System.out.println("Primero marque la salida de su ultimo turno antes de calcular.");
-                    break;
-                } 
->>>>>>> parent of bd59523 (Primeros Cambios a OO)
-                case 0: break;
-                default: System.out.println("Opcion no valida."); break;
-            }
-            
-        }
-    }
-    public void menuTurnoDisponibilidad()throws IOException{
-        int numero2 = -1;    
-        BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));       
-        while(numero2 != 0){        
-            System.out.println("-----------------------------------------");            
-            System.out.println("     Seleccione que cambio desea hacer");
-            System.out.println("-----------------------------------------");           
-            System.out.println("1. Modificar Turno.");
-            System.out.println("2. Modificar Disponibilidad.");            
-            System.out.println("3. Modificar Turno y Disponibilidad.");
-            System.out.println("0. Salir");            
-            System.out.println("Seleccione el numero para operar:");
-
-            
-                     
-            numero2=Integer.parseInt(entrada.readLine());
-            switch(numero2){           
-                case 1:{
-                    if(numero2==1){                   
-                        System.out.println("Ingrese Turno a modificar (dia/noche)");                        
-                        String turno = entrada.readLine();                       
-                        if(turno.equals("dia") || turno.equals("noche")){                       
-                            System.out.println("Ingrese numero Codigo o Nombre de la enfermera:");                            
-                            String dato =entrada.readLine();                           
-                            Enfermera enfermera;                            
-                            if (isNumeric(dato)==true) enfermera=retornarEnfermera(Integer.parseInt(dato));                           
-                            else enfermera=retornarEnfermera(dato);                           
-                            cambioTurnoEnfermera(enfermera, turno);                            
-                        }                       
-                    }                   
-                }                
-                case 2:{                
-                    if(numero2==2){                    
-                        System.out.println("Ingrese Disponibilidad a modificar (Si/No)");                         
-                        String disponibilidad  = entrada.readLine();                        
-                        boolean disponibilidadB;
-                        
-                        if(disponibilidad.equals("Si")) disponibilidadB= true;
-                        else{                        
-                            if(disponibilidad.equals("No")) disponibilidadB= false;                                                          
-                            else System.out.println("Opcion no valida."); break;
-                        }                                             
-                        System.out.println("Ingrese numero Codigo o Nombre de la enfermera:");                       
-                        String dato =entrada.readLine();                       
-                        Enfermera enfermera;                       
-                        if (isNumeric(dato)==true) enfermera=retornarEnfermera(Integer.parseInt(dato));                       
-                        else enfermera=retornarEnfermera(dato);                       
-                        cambioTurnoEnfermera(enfermera, disponibilidadB);
-                       
-                    }                   
-                }               
-                case 3:{               
-                    if (numero2==3){                   
-                        System.out.println("Ingrese Turno a modificar (dia/noche)");                        
-                        String turno = entrada.readLine();                      
-                        if(turno.equals("dia") || turno.equals("noche")){                       
-                            System.out.println("Ingrese Disponibilidad a modificar (Si/No)");                            
-                            String disponibilidad  = entrada.readLine();                          
-                            boolean disponibilidadB;
-                           
-                            if(disponibilidad.equals("Si")) disponibilidadB= true;                                                         
-                            else{                           
-                                if(disponibilidad.equals("No")) disponibilidadB= false;                                                                    
-                                else System.out.println("Opcion no valida."); break;                               
-                            }
-                           
-                            System.out.println("Ingrese numero Codigo o Nombre de la enfermera:");                           
-                            String dato =entrada.readLine();                            
-                            Enfermera enfermera;                           
-                            if (isNumeric(dato)==true) enfermera=retornarEnfermera(Integer.parseInt(dato));                           
-                            else enfermera=retornarEnfermera(dato);
-                            cambioTurnoEnfermera(enfermera, turno, disponibilidadB);                        
-                        }                       
-                    }                   
-                }               
-                case 0: break;
-                default: System.out.println("Opcion no valida."); break;   
-            }            
-        }
-    }
-    public void menuModificar()throws IOException{
-        int numero2 = -1;    
-        BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));       
-        while(numero2 != 0){        
-            System.out.println("-----------------------------------------");            
-            System.out.println("     Seleccione que cambio desea hacer");
-            System.out.println("-----------------------------------------");           
-            System.out.println("1. Eliminar Enfermera de Area");
-            System.out.println("2. Eliminar Enfermera de Hospital");            
-            System.out.println("3. Cambiar Nombre de Area");
-            System.out.println("4. Eliminar Area");
-            System.out.println("0. Salir");            
-            System.out.println("Seleccione el numero para operar:");
-
-            
-                     
-            numero2=Integer.parseInt(entrada.readLine());
-            switch(numero2){           
-                case 1: eliminarEnfermeraArea();break;
-                case 2: eliminarEnfermeraHospital();break;
-                case 3: cambiarNombreArea();break;
-                case 4: eliminarArea();break;                
-                case 0: break;
-                default: System.out.println("Opcion no valida."); break;   
-            }
-        }
     }
     /*Eliminar de las colecciones*/
     public void eliminarEnfermeraArea()throws IOException{
@@ -337,21 +141,24 @@ public class Hospital{
         }
     }
     /*Mostrar las colecciones*/
-    public void mostrarListadoAreas() throws IOException{
-        BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
-        String dato;
+    public ArrayList mostrarListadoAreas(){
+        ArrayList aux  = new ArrayList<>();
+        
         for(AreasHospital areas : this.areasHospital)
-            System.out.println(areas.getNombre());
+            aux.add(areas.getNombre());
         
-        System.out.println("Quiere mostrar enfermeras del area (si o no):");
-        dato = entrada.readLine();
-        if(dato.equals("si")){
-            System.out.println("Que area desea ver:");
-            dato=entrada.readLine();
-            for(AreasHospital areas : this.areasHospital)
-                if (areas.getNombre().equals(dato)) areas.Mostrar();     
         
+        return aux; 
+    }
+    public ArrayList mostrarEnfermerasArea(String aux){
+        ArrayList areaEnf = new ArrayList();
+        for (int i=0;i<areasHospital.size();i++){
+            if (areasHospital.get(i).getNombre().equals(aux)){
+                areaEnf = areasHospital.get(i).obtenerListaEnfermeras();
+                return areaEnf;
+            }
         }
+        return areaEnf;
     }
     public void mostrarListadoEnfermeras(){
         for(Enfermera enfermera : this.enfermerasNombre.values())
@@ -398,12 +205,12 @@ public class Hospital{
         if (isNumeric(dato)){
             int datoInt = Integer.parseInt(dato);
             Enfermera enf = retornarEnfermera(datoInt);
-            enf.calcularSalario();
+            enf.mostrarSalario();
             modificarEnMapasListas(enf);
         }
         else {
             Enfermera enf = retornarEnfermera(dato);
-            enf.calcularSalario();
+            enf.mostrarSalario();
             modificarEnMapasListas(enf);
         }
     }
@@ -470,8 +277,7 @@ public class Hospital{
                 System.out.println("Nuevo nombre:");
                 nombre = entrada.readLine();
                 areasHospital.get(i).setNombre(nombre);
-            }
-            
+            }    
         }
     }
     public void cambioTurnoEnfermera(Enfermera enfermera, String turno){
@@ -520,8 +326,6 @@ public class Hospital{
         }
         return false;
     }
-
-    
     /*Metodos asociados a las funciones*/
     public Enfermera retornarEnfermera (int codigo){
         if(enfermerasCodigo.containsKey(codigo)==true)return enfermerasCodigo.get(codigo);
@@ -553,23 +357,4 @@ public class Hospital{
         } 
         return i;
     }
-    
-    public void mejorPagada(){
-        int aux2=0; 
-        String aux1=null;
-        for(int i=0; i<areasHospital.size(); i++){
-            AreasHospital aux = areasHospital.get(i);
-            for (int k=0; k<aux.obtenerSize(); k++){
-                Enfermera ef= aux.obtenerEnfermera(k);
-                if (ef.getSueldo()>aux2){
-                    aux1=ef.getNombre();
-                    aux2=ef.getSueldo();
-                    
-                }
-            }      
-        }
-        System.out.println("La/El enfermera(o) mejor pagado es: " + aux1 + " " + "Su sueldo es: " + aux2);
-        
-    }
-} 
-
+}
