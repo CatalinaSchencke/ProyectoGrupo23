@@ -35,7 +35,10 @@ public class Enfermera implements MostrarDatos{
         System.out.println("Codigo Asignado: "+this.codigo);
         System.out.println("Tipo de Contrato: "+this.contrato);
         System.out.println(" ");
+
         System.out.println(" sueldo: "+ this.sueldo);
+
+
     }
 
     public void calcularSalario(){
