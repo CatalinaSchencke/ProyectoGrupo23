@@ -39,7 +39,7 @@ public class ClaseMenu {
             numero=Integer.parseInt(entrada.readLine());
             switch(numero){
                 //case 1: agregarEnfermera(); break;
-                //case 2: agregarArea(); break;
+                case 2: agregarArea(hospital); break;
                 case 3: mostrarListadoAreas(hospital);break;
                 case 4: mostrarListadoEnfermeras(hospital); break;
                 /*case 5: {
@@ -109,6 +109,18 @@ public class ClaseMenu {
         for (int i=0; i<parts.length;i++){
             System.out.println(parts[i]);
         }
+    }
+    
+    public void agregarArea (Hospital aux) throws IOException {
+        BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
+        String dato;
+        
+        System.out.println("Ingrese Nombre del Area Nueva:");
+        dato = entrada.readLine();
+        aux.agregarArea(dato);
+        
+        System.out.println("Area : "+ dato+ " agregada exitosamente ");
+    
     }
     /*public void menuTurnoDisponibilidad()throws IOException{
         int numero2 = -1;    

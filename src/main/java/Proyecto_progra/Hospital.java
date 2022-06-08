@@ -74,16 +74,16 @@ public class Hospital{
 
     }
     /*Agregar a las colecciones*/
-    public void agregarArea() throws IOException {
-        BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
-        String dato;
+    public ArrayList agregarArea(String dato){
+        ArrayList aux  = new ArrayList<>();
         
-        System.out.println("Ingrese Nombre del Area Nueva:");
-        dato = entrada.readLine();
+        for(AreasHospital areas : this.areasHospital)
+            aux.add(areas.getNombre());
         
-        AreasHospital areas = new AreasHospital(dato);
-        
-        this.areasHospital.add(areas);
+        AreasHospital aux2 = new AreasHospital(dato);
+        this.areasHospital.add(aux2);
+
+        return aux; 
     }
     public void agregarEnfermera() throws IOException{
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
