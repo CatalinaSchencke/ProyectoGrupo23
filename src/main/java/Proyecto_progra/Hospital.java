@@ -74,61 +74,40 @@ public class Hospital{
 
     }
     /*Agregar a las colecciones*/
-    public ArrayList agregarArea(String dato){
-        ArrayList aux  = new ArrayList<>();
-        
-        for(AreasHospital areas : this.areasHospital)
-            aux.add(areas.getNombre());
-        
+    public boolean agregarArea(String dato){
+        if (buscarArea(dato)==true){
+            return false;
+        }
         AreasHospital aux2 = new AreasHospital(dato);
         this.areasHospital.add(aux2);
-
-        return aux; 
+        return true; 
     }
-    public void agregarEnfermera() throws IOException{
-        BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
-        System.out.println("Ingrese Nombre de la enfermera");
-        String dato;
-        int cont=0;
-        do{
-            dato=entrada.readLine();
-            if (this.enfermerasNombre.containsKey(dato) == true){
-                System.out.println("El nombre ingresado ya existe en la base de datos, por favor ingresar otro");
-                cont++; 
-            }
-            if (cont==3)return;
-        }while(this.enfermerasNombre.containsKey(dato) == true);
+        public boolean agregarEnfermera(String dato){
+        String[] parts=dato.split(",");
+        System.out.println(dato);
+        Enfermera nurse = new Enfermera(parts[0]);
         
-        Enfermera nurse = new Enfermera(dato);
         
-        System.out.println("Ingrese disponibilidad (true / false )");
-        dato=entrada.readLine();
-        if (dato.equals("true")) nurse.setDisponibilidad(true);
-        if (dato.equals("false")) nurse.setDisponibilidad(false);
-
-        System.out.println("Ingrese turno (dia / noche)");
-        dato=entrada.readLine();
-        nurse.setTurno(dato);
+        if (parts[1].equals("true")) nurse.setDisponibilidad(true);
+        if (parts[1].equals("false")) nurse.setDisponibilidad(false);
+ 
         
-        System.out.println("Ingrese el area al que pertenece(Todo con Mayusculas)");
-        do{
-            dato=entrada.readLine();
-            if (buscarArea(dato) == false){
-                System.out.println("No se puede ingresar una nueva area a la base de datos, por favor intente nuevamente");
-            }
-            else break;
-        }while(this.enfermerasNombre.containsKey(dato) == false);
+        nurse.setTurno(parts[3]);
+       
         int max=0;
         for (int i : this.enfermerasCodigo.keySet()) if (i > max) max = i;
-        
         nurse.setCodigo(max+1);
         
+        nurse.setContrato("INDEFINIDO");
+        
         //agregar a la lista
-        this.areasHospital.get(obtenerIndex(dato)).agregarListaEnfermeras(nurse);
+        this.areasHospital.get(obtenerIndex(parts[3])).agregarListaEnfermeras(nurse);
         //agregar al mapa
         this.enfermerasNombre.put(nurse.getNombre(), nurse);
         this.enfermerasCodigo.put(nurse.getCodigo(), nurse);
-      
+        
+        
+        return true;
     }
     public void modificarEnMapasListas(Enfermera enf){
         enfermerasCodigo.put(enf.getCodigo(), enf);
@@ -165,10 +144,8 @@ public class Hospital{
             enfermera.Mostrar();
     }
     //Marcar Entrada y Salida
-    public void marcarEntrada() throws IOException{
-        System.out.println("Ingrese Codigo o Nombre de la Enfermera");
-        BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
-        String dato=entrada.readLine();
+    public void marcarEntrada( String dato){
+
         if (isNumeric(dato)){
             int datoInt = Integer.parseInt(dato);
             Enfermera enf= retornarEnfermera(datoInt);
@@ -178,14 +155,11 @@ public class Hospital{
         else {
             Enfermera enf = retornarEnfermera(dato);
             enf.marcarEntrada();
-            modificarEnMapasListas(enf);
-        }
-        
+            modificarEnMapasListas(enf);    
+        } 
     }
-    public void marcarSalida() throws IOException{
-        System.out.println("Ingrese Codigo o Nombre de la Enfermera");
-        BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
-        String dato=entrada.readLine();
+    public void marcarSalida(String dato) {
+
         if (isNumeric(dato)){
             int datoInt = Integer.parseInt(dato);
             Enfermera enf= retornarEnfermera(datoInt);
@@ -198,20 +172,20 @@ public class Hospital{
             modificarEnMapasListas(enf);
         }
     }
-    public void generarSalario() throws IOException{
-        System.out.println("Ingrese Codigo o Nombre de la Enfermera");
-        BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
-        String dato=entrada.readLine();
+    public Enfermera generarSalario( String dato ){
         if (isNumeric(dato)){
             int datoInt = Integer.parseInt(dato);
             Enfermera enf = retornarEnfermera(datoInt);
-            enf.mostrarSalario();
             modificarEnMapasListas(enf);
+            return enf;
+            //enf.mostrarSalario();
+            
         }
         else {
             Enfermera enf = retornarEnfermera(dato);
             enf.mostrarSalario();
             modificarEnMapasListas(enf);
+            return enf;
         }
     }
     /*Uso de datos de Archivos*/

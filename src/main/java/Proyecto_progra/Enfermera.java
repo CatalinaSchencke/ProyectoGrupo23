@@ -45,19 +45,20 @@ public class Enfermera implements MostrarDatos{
             sueldo=aux.calcularSueldo(horasTrabajadas);
         }
         if (contrato.equals("INDEFINIDO")){
-            Contrato aux= new Contrato();
+            Salario aux= new Contrato();
             sueldo=aux.calcularSueldo(horasTrabajadas);
         }
     }
-    public void mostrarSalario(){
+    public String mostrarSalario(){
         if (contrato.equals("HONORARIO")){
-            Honorario aux= new Honorario();
-            aux.mostrarSueldo(horasTrabajadas);
+            Salario aux= new Honorario();   
+            return aux.mostrarSueldo(horasTrabajadas);
         }
         if (contrato.equals("INDEFINIDO")){
-            Contrato aux= new Contrato();
-            aux.mostrarSueldo(horasTrabajadas);
+            Salario aux= new Contrato();
+            return aux.mostrarSueldo(horasTrabajadas);
         }
+        return "No se puede mostar el salario";
     }
     
     public void marcarEntrada(){

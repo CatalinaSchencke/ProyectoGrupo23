@@ -42,20 +42,20 @@ public class ClaseMenu {
                 case 2: agregarArea(hospital); break;
                 case 3: mostrarListadoAreas(hospital);break;
                 case 4: mostrarListadoEnfermeras(hospital); break;
-                /*case 5: {
-                    marcarEntrada();
+                case 5: {
+                    marcarEntrada(hospital);
                     aux=1;
                     break;
                 }
                 case 6: {
                     if (aux==1){
-                        marcarSalida();
+                        marcarSalida(hospital);
                         flagCalculo=true;
                     }
                     break;
                     
                 }
-                case 7: {
+                /*case 7: {
                     System.out.println("Ingrese numero Codigo o Nombre de la enfermera:");
                     String dato=entrada.readLine();
                     if (isNumeric(dato)==true) buscarEnfermera(Integer.parseInt(dato));
@@ -63,26 +63,46 @@ public class ClaseMenu {
                 }
                 case 8: menuTurnoDisponibilidad();break;
                 case 9: exportarReporte(); break;
-                case 10: menuModificar(); break;
-                case 11: {
-                    if (flagCalculo==true){
-                        generarSalario();
-                        flagCalculo=false;
-                    }  
-                    else System.out.println("Primero marque la salida de su ultimo turno antes de calcular.");
-                    break;
-                } */
+                case 10: menuModificar(); break;*/
+                case 11:{
+                    //if (flagCalculo==true){
+                        generarSalario(hospital);
+                        //flagCalculo=false;
+                    //}  
+                    //else System.out.println("Primero marque la salida de su ultimo turno antes de calcular.");
+                    //break;
+                } 
                 case 0: break;
                 default: System.out.println("Opcion no valida."); break;
             }
             
         }
     }
+    public void marcarEntrada (Hospital hospital) throws  IOException{
+        System.out.println("Ingrese Codigo o Nombre de la Enfermera");
+        BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
+        String dato=entrada.readLine();
+        hospital.marcarEntrada(dato);
+    }
+    
+    public void marcarSalida(Hospital hospital) throws IOException{
+        System.out.println("Ingrese Codigo o Nombre de la Enfermera");
+        BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
+        String dato=entrada.readLine();
+        hospital.marcarSalida(dato);
+    }
+    public void generarSalario (Hospital hospital) throws IOException{
+        System.out.println("Ingrese Codigo o Nombre de la Enfermera");
+        BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
+        String dato=entrada.readLine();    
+        Enfermera enf=hospital.generarSalario(dato);
+        System.out.println(enf.mostrarSalario());
+    }
     public void mostrarListadoAreas(Hospital hospital)throws IOException{
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
         String dato;
         ArrayList aux = new ArrayList (hospital.mostrarListadoAreas());
-
+ 
         for(int i=0;i<aux.size();i++){
             String nombreAreas = (String) aux.get(i);
             System.out.println(nombreAreas);
@@ -101,9 +121,51 @@ public class ClaseMenu {
             }  
         }
     }
-    public void mostrarListadoEnfermeras(Hospital hospital)throws IOException{
-        
+    public void agregarEnfermera(Hospital hospital)throws IOException{
+        BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
+        String dato;
+        int cont=0;
+        while(true){
+            System.out.println("Ingrese Nombre de la enfermera");
+            dato=entrada.readLine();
+            if (hospital.existeEnfermera(dato)==false)break;
+            if(cont==3)return;
+            System.out.println("Tiene "+(3-cont)+" intentos mas:");
+            cont++;
+        }
+        String s=dato;
+        System.out.println("Ingrese disponibilidad (true / false )");
+        dato=entrada.readLine();
+        s=s.concat(","+dato);
+        System.out.println("Ingrese turno (dia / noche)");
+        dato=entrada.readLine();
+        s=s.concat(","+dato);
+        while(true){
+            System.out.println("Ingrese el area al que pertenece(Todo con Mayusculas)");
+            dato=entrada.readLine();
+            if (hospital.buscarArea(dato)==true)break;
+            if (cont==3)return;
+            System.out.println("Tiene "+(3-cont)+" intentos mas:");
+            cont++;
+        }
+        s=s.concat(","+dato);
+        boolean aux = hospital.agregarEnfermera(s);
+        if(aux==true){
+            System.out.println("Se agrego exitosamente.");
+        }else{
+            System.out.println("Hubo un error al ingresar la enfermera.");
+        }
     }
+    public void mostrarListadoEnfermeras(Hospital hospital)throws IOException{
+        ArrayList aux = hospital.mostrarListadoEnfermeras();
+        for (int i=0; i<aux.size();i++){
+            String s = (String) aux.get(i);
+            mostrarStringsConcatenados(s);
+            System.out.println(" ");
+        }
+    }
+    
+    
     public void mostrarStringsConcatenados(String aux){
         String[] parts=aux.split(",");
         for (int i=0; i<parts.length;i++){
@@ -111,15 +173,18 @@ public class ClaseMenu {
         }
     }
     
-    public void agregarArea (Hospital aux) throws IOException {
+    public void agregarArea (Hospital hospital) throws IOException {
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
         String dato;
         
         System.out.println("Ingrese Nombre del Area Nueva:");
         dato = entrada.readLine();
-        aux.agregarArea(dato);
-        
-        System.out.println("Area : "+ dato+ " agregada exitosamente ");
+        boolean aux=hospital.agregarArea(dato);
+        if (aux==true){
+            System.out.println("Area : "+ dato+ " agregada exitosamente ");
+        }else{
+            System.out.println("Hubo un error al ingresar el Area.");
+        }
     
     }
     /*public void menuTurnoDisponibilidad()throws IOException{
