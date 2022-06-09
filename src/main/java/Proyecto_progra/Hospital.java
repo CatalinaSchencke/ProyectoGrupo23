@@ -23,21 +23,10 @@ public class Hospital{
         this.nombre = nombre;
     }
     /*Eliminar de las colecciones*/
-    public void eliminarEnfermeraArea()throws IOException{
-        BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));  
-        System.out.println("Ingrese Area de enfermera a eliminar:");
-        String aux = entrada.readLine();
-        for (int i=0;i<areasHospital.size();i++){
-            if (areasHospital.get(i).getNombre().equals(aux)){
-                do{
-                    System.out.println("Ingrese nombre de enfermera a eliminar");
-                    aux = entrada.readLine();
-                    if (areasHospital.get(i).existeEnfermera(aux)==true)break;
-                }while(true==true);
-                areasHospital.get(i).eliminarListaEnfermeras(aux);
-                System.out.println("Eliminado correctamente.");
-            }
-        }
+    public void eliminarEnfermeraArea(String datos){
+        String[] parts=datos.split(",");
+        areasHospital.get(obtenerIndex(parts[0])).eliminarListaEnfermeras(parts[1]);
+        
     }
     public void eliminarEnfermeraHospital(String aux){
 
@@ -51,21 +40,8 @@ public class Hospital{
         }
         
     }
-    public void eliminarArea()throws IOException{
-        BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));  
-        String aux;
-            
-            System.out.println("Ingrese nombre de area");
-            aux = entrada.readLine();
-            for (int i=0; i<areasHospital.size();i++){
-                if (areasHospital.get(i).getNombre().equals(aux)==true) {
-                   areasHospital.remove(i);
-                  System.out.println("Eliminado correctamente.");
-                  return;
-                }
-            }
-            System.out.println("El area no existe, retornando a menu...");
-
+    public void eliminarArea(String nombreArea){
+        areasHospital.remove(obtenerIndex(nombreArea));
     }
     /*Agregar a las colecciones*/
     public boolean agregarArea(String dato){
@@ -237,24 +213,24 @@ public class Hospital{
          
     }
     /*Modificar las colecciones*/
-    public void cambiarNombreArea()throws IOException{
-        BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
-        System.out.println("Nombre del Area a cambiar:");
-        String nombre = entrada.readLine();
-        for (int i=0;i<areasHospital.size();i++){
-            if (areasHospital.get(i).getNombre().equals(nombre)){
-                System.out.println("Nuevo nombre:");
-                nombre = entrada.readLine();
-                areasHospital.get(i).setNombre(nombre);
-            }    
-        }
+    public void cambiarNombreArea(String datos){
+        String[] parts=datos.split(",");
+        areasHospital.get(obtenerIndex(parts[0])).setNombre(parts[1]);  
     }
-    public void cambioTurnoEnfermera(Enfermera enfermera, String turno){
-        System.out.println("Información de la enfermera Inicial"); 
-        enfermera.Mostrar();
+    public String cambioTurnoEnfermera(String dato, String turno){
+        Enfermera enfermera;
+        if (isNumeric(dato)==true){
+            enfermera = retornarEnfermera(Integer.parseInt(dato));
+        }else{
+            enfermera = retornarEnfermera(dato);
+        }
+        String s = "Información de la enfermera Inicial,";
+        s=s.concat(enfermera.Mostrar()+",");
         enfermera.setTurno(turno);
-        System.out.println("Información de la enfermera Modificada"); 
-        enfermera.Mostrar();
+        s=s.concat("Información de la enfermera Modificada,");
+        s=s.concat(enfermera.Mostrar()+",");
+        modificarEnMapasListas(enfermera);
+        return s;
     }
     public void cambioTurnoEnfermera(Enfermera enfermera, boolean disponibilidad){
         System.out.println("Información de la enfermera Inicial"); 
@@ -289,14 +265,12 @@ public class Hospital{
             return s;
         }else return ("Nombre de enfermera no encontrado,");
     }
-    
     public boolean existeEnfermera(String nombre){
         if (enfermerasNombre.containsKey(nombre)==true){
             return true;
         }
         return false;
     }
-    
     public boolean buscarArea(String nombreArea){
         for (AreasHospital area : this.areasHospital){
             if (area.getNombre().equals(nombreArea)){
