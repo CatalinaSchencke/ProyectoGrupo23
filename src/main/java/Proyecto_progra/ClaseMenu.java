@@ -84,7 +84,6 @@ public class ClaseMenu {
         String dato=entrada.readLine();
         hospital.marcarEntrada(dato);
     }
-    
     public void marcarSalida(Hospital hospital) throws IOException{
         System.out.println("Ingrese Codigo o Nombre de la Enfermera");
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
@@ -164,15 +163,12 @@ public class ClaseMenu {
             System.out.println(" ");
         }
     }
-    
-    
     public void mostrarStringsConcatenados(String aux){
         String[] parts=aux.split(",");
         for (int i=0; i<parts.length;i++){
             System.out.println(parts[i]);
         }
-    }
-    
+    } 
     public void agregarArea (Hospital hospital) throws IOException {
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
         String dato;

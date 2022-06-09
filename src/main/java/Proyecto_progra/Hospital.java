@@ -82,16 +82,14 @@ public class Hospital{
         this.areasHospital.add(aux2);
         return true; 
     }
-        public boolean agregarEnfermera(String dato){
+    public boolean agregarEnfermera(String dato){
         String[] parts=dato.split(",");
         System.out.println(dato);
         Enfermera nurse = new Enfermera(parts[0]);
-        
-        
+
         if (parts[1].equals("true")) nurse.setDisponibilidad(true);
         if (parts[1].equals("false")) nurse.setDisponibilidad(false);
- 
-        
+
         nurse.setTurno(parts[3]);
        
         int max=0;
@@ -105,8 +103,7 @@ public class Hospital{
         //agregar al mapa
         this.enfermerasNombre.put(nurse.getNombre(), nurse);
         this.enfermerasCodigo.put(nurse.getCodigo(), nurse);
-        
-        
+
         return true;
     }
     public void modificarEnMapasListas(Enfermera enf){
@@ -139,9 +136,13 @@ public class Hospital{
         }
         return areaEnf;
     }
-    public void mostrarListadoEnfermeras(){
-        for(Enfermera enfermera : this.enfermerasNombre.values())
-            enfermera.Mostrar();
+    public ArrayList mostrarListadoEnfermeras(){
+        ArrayList aux = new ArrayList();
+        
+        for(Enfermera enfermera : this.enfermerasNombre.values()){
+            aux.add(enfermera.Mostrar());
+        }
+        return aux;
     }
     //Marcar Entrada y Salida
     public void marcarEntrada( String dato){
@@ -277,21 +278,31 @@ public class Hospital{
         enfermera.Mostrar();
     }
     /*Buscar en las colecciones*/
-    public void buscarEnfermera(int codigo){
+    public String buscarEnfermera(int codigo){
         Enfermera enfermera;
-        if(this.enfermerasCodigo.containsKey(codigo)==true){
-            enfermera=this.enfermerasCodigo.get(codigo);
-            enfermera.Mostrar();
-        }else System.out.println("No existe ese codigo de enfermera");
+        if(enfermerasCodigo.containsKey(codigo)==true){
+            enfermera=enfermerasCodigo.get(codigo);
+            String s = enfermera.Mostrar();
+            return s;
+        }else return ("No existe ese codigo de enfermera,");
     }
-    public void buscarEnfermera(String nombre){
+    public String buscarEnfermera(String nombre){
         Enfermera enfermera;
         
-        if(this.enfermerasNombre.containsKey(nombre)==true){
-            enfermera=this.enfermerasNombre.get(nombre);
-            enfermera.Mostrar();
-        }else System.out.println("Nombre de enfermera no encontrado");
+        if(enfermerasNombre.containsKey(nombre)==true){
+            enfermera=enfermerasNombre.get(nombre);
+            String s = enfermera.Mostrar();
+            return s;
+        }else return ("Nombre de enfermera no encontrado,");
     }
+    
+    public boolean existeEnfermera(String nombre){
+        if (enfermerasNombre.containsKey(nombre)==true){
+            return true;
+        }
+        return false;
+    }
+    
     public boolean buscarArea(String nombreArea){
         for (AreasHospital area : this.areasHospital){
             if (area.getNombre().equals(nombreArea)){
