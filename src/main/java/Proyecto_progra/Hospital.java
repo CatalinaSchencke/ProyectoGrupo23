@@ -39,14 +39,8 @@ public class Hospital{
             }
         }
     }
-    public void eliminarEnfermeraHospital()throws IOException{
-        BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));  
-        String aux;
-        do{
-            System.out.println("Ingrese nombre de enfermera a eliminar");
-            aux = entrada.readLine();
-            if (enfermerasNombre.containsKey(aux)==true)break;
-        }while(true==true);
+    public void eliminarEnfermeraHospital(String aux){
+
         Enfermera ee = enfermerasNombre.remove(aux);
         enfermerasCodigo.remove(ee.getCodigo());
         for (int i=0;i<areasHospital.size();i++){
@@ -55,7 +49,7 @@ public class Hospital{
                 
             }
         }
-        System.out.println("Eliminado correctamente.");
+        
     }
     public void eliminarArea()throws IOException{
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));  
@@ -240,7 +234,7 @@ public class Hospital{
             }  
             ManejoArchivos.anexarArchivo("Reporte.txt", " ");
         }
-         System.out.println("Se exporto exitosamente");
+         
     }
     /*Modificar las colecciones*/
     public void cambiarNombreArea()throws IOException{
@@ -324,7 +318,7 @@ public class Hospital{
         
         return null ;
     }
-    private static boolean isNumeric (String cadena){
+    public static boolean isNumeric (String cadena){
         boolean result;
         try{
             Integer.parseInt(cadena);

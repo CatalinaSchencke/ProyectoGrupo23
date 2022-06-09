@@ -55,15 +55,10 @@ public class ClaseMenu {
                     break;
                     
                 }
-                /*case 7: {
-                    System.out.println("Ingrese numero Codigo o Nombre de la enfermera:");
-                    String dato=entrada.readLine();
-                    if (isNumeric(dato)==true) buscarEnfermera(Integer.parseInt(dato));
-                    else buscarEnfermera(dato);
-                }
-                case 8: menuTurnoDisponibilidad();break;
-                case 9: exportarReporte(); break;
-                case 10: menuModificar(); break;*/
+                case 7: buscarEnfermera(hospital);break;
+                /*case 8: menuTurnoDisponibilidad();break;
+                case 9: exportarReporte(); break;*/
+                case 10: menuModificar(hospital); break;
                 case 11:{
                     //if (flagCalculo==true){
                         generarSalario(hospital);
@@ -106,7 +101,7 @@ public class ClaseMenu {
             String nombreAreas = (String) aux.get(i);
             System.out.println(nombreAreas);
         }
-           
+        
         System.out.println("Quiere mostrar enfermeras del area (si o no):");
         dato = entrada.readLine();
         if(dato.equals("si")){
@@ -119,6 +114,19 @@ public class ClaseMenu {
                 System.out.println(" ");
             }  
         }
+    }
+    public void buscarEnfermera(Hospital hospital)throws IOException{
+        BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("Ingrese numero Codigo o Nombre de la enfermera:");
+        String dato=entrada.readLine();
+        if (hospital.isNumeric(dato)==true){
+            mostrarStringsConcatenados(hospital.buscarEnfermera(Integer.parseInt(dato))); 
+
+        }
+        else {
+            mostrarStringsConcatenados(hospital.buscarEnfermera(dato));
+        }
+
     }
     public void agregarEnfermera(Hospital hospital)throws IOException{
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
@@ -262,8 +270,20 @@ public class ClaseMenu {
                 default: System.out.println("Opcion no valida."); break;   
             }            
         }
+    }*/
+    public void eliminarEnfermeraHospital (Hospital hospital) throws IOException{
+        BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));  
+        String aux;
+        do{
+            System.out.println("Ingrese nombre de enfermera a eliminar");
+            aux = entrada.readLine();
+            if (hospital.existeEnfermera(aux)==true)break;
+        }while(true==true);
+        hospital.eliminarEnfermeraHospital(aux);
+        //System.out.println("Eliminado correctamente.");
     }
-    public void menuModificar()throws IOException{
+    
+    public void menuModificar( Hospital hospital)throws IOException{
         int numero2 = -1;    
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));       
         while(numero2 != 0){        
@@ -281,13 +301,13 @@ public class ClaseMenu {
                      
             numero2=Integer.parseInt(entrada.readLine());
             switch(numero2){           
-                case 1: eliminarEnfermeraArea();break;
-                case 2: eliminarEnfermeraHospital();break;
-                case 3: cambiarNombreArea();break;
-                case 4: eliminarArea();break;                
+                //case 1: eliminarEnfermeraArea(hospital);break;
+                case 2: eliminarEnfermeraHospital(hospital);break;
+                //case 3: cambiarNombreArea(hospital);break;
+               // case 4: eliminarArea(hospital);break;                
                 case 0: break;
                 default: System.out.println("Opcion no valida."); break;   
             }
         }
-    }*/
+    }
 }
