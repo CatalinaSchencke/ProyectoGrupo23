@@ -5,14 +5,14 @@ import java.util.*;
 
 public class Hospital{
     private String nombre;
-    private ArrayList<AreasHospital> areasHospital ;
+    private ListaDeAreas areasHospital ;
     private HashMap<Integer,Enfermera> enfermerasCodigo;
     private HashMap<String,Enfermera> enfermerasNombre;
     
     public Hospital(){}
     public Hospital(String nombre) {
         this.nombre = nombre;
-        this.areasHospital = new ArrayList<>();
+        this.areasHospital = new ListaDeAreas();
         this.enfermerasCodigo = new HashMap<>();
         this.enfermerasNombre = new HashMap<>();
     }
@@ -22,6 +22,7 @@ public class Hospital{
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+    
     /*Eliminar de las colecciones*/
     public void eliminarEnfermeraArea(String datos){
         String[] parts=datos.split(",");
@@ -90,21 +91,20 @@ public class Hospital{
     public ArrayList mostrarListadoAreas(){
         ArrayList aux  = new ArrayList<>();
         
-        for(AreasHospital areas : this.areasHospital)
-            aux.add(areas.getNombre());
-        
-        
+        for(int i = 0; i<areasHospital.size();i++){
+            aux.add(areasHospital.get(i).Mostrar());
+        }
         return aux; 
     }
-    public ArrayList mostrarEnfermerasArea(String aux){
-        ArrayList areaEnf = new ArrayList();
+    public String mostrarEnfermerasArea(String aux){
+        String s = null;
         for (int i=0;i<areasHospital.size();i++){
             if (areasHospital.get(i).getNombre().equals(aux)){
-                areaEnf = areasHospital.get(i).obtenerListaEnfermeras();
-                return areaEnf;
+                s = areasHospital.get(i).Mostrar();
+                return s;
             }
         }
-        return areaEnf;
+        return s;
     }
     public ArrayList mostrarListadoEnfermeras(){
         ArrayList aux = new ArrayList();
@@ -149,8 +149,7 @@ public class Hospital{
             Enfermera enf = retornarEnfermera(datoInt);
             modificarEnMapasListas(enf);
             return enf;
-            //enf.mostrarSalario();
-            
+            //enf.mostrarSalario();    
         }
         else {
             Enfermera enf = retornarEnfermera(dato);
@@ -173,18 +172,19 @@ public class Hospital{
                 enfermera.setCodigo(100+numeroClave);
                 enfermera.setTurno(parts[2]);
                 enfermera.setContrato(parts[3]);
-                
+                if(numeroClave%2==0)enfermera.setDisponibilidad(true);
+                else enfermera.setDisponibilidad(false);
                 this.enfermerasCodigo.put(enfermera.getCodigo(), enfermera);
                 this.enfermerasNombre.put(enfermera.getNombre(), enfermera);
                 
-                if(buscarArea(parts[0])==false || this.areasHospital.size()==13){
+                if(buscarArea(parts[0])==false || areasHospital.size()==13){
                     AreasHospital area= new AreasHospital(parts[0]);
-                    this.areasHospital.add(area);
+                    areasHospital.add(area);
                     int index = obtenerIndex(parts[0]);
-                    this.areasHospital.get(index).agregarListaEnfermeras(enfermera);
+                    areasHospital.get(index).agregarListaEnfermeras(enfermera);
                 }else{
                     int index = obtenerIndex(parts[0]);
-                    this.areasHospital.get(index).agregarListaEnfermeras(enfermera);
+                    areasHospital.get(index).agregarListaEnfermeras(enfermera);
                 }
        
                 numeroClave++;  
@@ -225,27 +225,43 @@ public class Hospital{
             enfermera = retornarEnfermera(dato);
         }
         String s = "Información de la enfermera Inicial,";
-        s=s.concat(enfermera.Mostrar()+",");
+        s=s.concat(enfermera.Mostrar());
         enfermera.setTurno(turno);
         s=s.concat("Información de la enfermera Modificada,");
-        s=s.concat(enfermera.Mostrar()+",");
+        s=s.concat(enfermera.Mostrar());
         modificarEnMapasListas(enfermera);
         return s;
     }
-    public void cambioTurnoEnfermera(Enfermera enfermera, boolean disponibilidad){
-        System.out.println("Información de la enfermera Inicial"); 
-        enfermera.Mostrar();
+    public String cambioTurnoEnfermera(String dato, boolean disponibilidad){
+        Enfermera enfermera;
+        if (isNumeric(dato)==true){
+            enfermera = retornarEnfermera(Integer.parseInt(dato));
+        }else{
+            enfermera = retornarEnfermera(dato);
+        }
+        String s = "Información de la enfermera Inicial,";
+        s=s.concat(enfermera.Mostrar());
         enfermera.setDisponibilidad(disponibilidad);
-        System.out.println("Información de la enfermera Modificada"); 
-        enfermera.Mostrar();
+        s=s.concat("Información de la enfermera Modificada,");
+        s=s.concat(enfermera.Mostrar());
+        modificarEnMapasListas(enfermera);
+        return s;
     }
-    public void cambioTurnoEnfermera(Enfermera enfermera, String turno, boolean disponibilidad ){
-        System.out.println("Información de la enfermera Inicial"); 
-        enfermera.Mostrar();
-        enfermera.setTurno(turno);
+    public String cambioTurnoEnfermera(String dato, String turno, boolean disponibilidad ){
+        Enfermera enfermera;
+        if (isNumeric(dato)==true){
+            enfermera = retornarEnfermera(Integer.parseInt(dato));
+        }else{
+            enfermera = retornarEnfermera(dato);
+        }
+        String s = "Información de la enfermera Inicial,";
+        s=s.concat(enfermera.Mostrar());
         enfermera.setDisponibilidad(disponibilidad);
-        System.out.println("Información de la enfermera Modificada"); 
-        enfermera.Mostrar();
+        enfermera.setTurno(turno);
+        s=s.concat("Información de la enfermera Modificada,");
+        s=s.concat(enfermera.Mostrar());
+        modificarEnMapasListas(enfermera);
+        return s;
     }
     /*Buscar en las colecciones*/
     public String buscarEnfermera(int codigo){
@@ -272,8 +288,8 @@ public class Hospital{
         return false;
     }
     public boolean buscarArea(String nombreArea){
-        for (AreasHospital area : this.areasHospital){
-            if (area.getNombre().equals(nombreArea)){
+        for (int i=0;i<areasHospital.size();i++){
+            if (areasHospital.get(i).getNombre().equals(nombreArea)){
                 return true;
             }
         }
@@ -304,8 +320,8 @@ public class Hospital{
     }
     public int obtenerIndex(String nombreArea){
         int i;
-        for (i=0;i<this.areasHospital.size();i++){
-            if (this.areasHospital.get(i).getNombre().equals(nombreArea))
+        for (i=0;i<areasHospital.size();i++){
+            if (areasHospital.get(i).getNombre().equals(nombreArea))
                 return i;
         } 
         return i;

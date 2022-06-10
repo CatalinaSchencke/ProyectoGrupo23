@@ -1,5 +1,4 @@
 package Proyecto_progra;
-import java.util.*;
 
 public class Enfermera implements MostrarDatos{
     private String nombre;
@@ -28,13 +27,13 @@ public class Enfermera implements MostrarDatos{
         if (this.disponibilidad==true){
             s = s.concat(",Disponibilidad Inmediata: Si");
         }
-        else{
-            s = s.concat(",Disponibilidad Inmediata: Si");
+        if(this.disponibilidad==false){
+            s = s.concat(",Disponibilidad Inmediata: No");
         }
         s = s.concat(",Turno: "+this.turno);
         s = s.concat(",Codigo Asignado: "+this.codigo);
         s = s.concat(",Tipo de Contrato: "+this.contrato);
-        s = s.concat(",");
+        s = s.concat("\n,");
         return s;
         
     }

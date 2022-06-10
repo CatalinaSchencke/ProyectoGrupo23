@@ -124,12 +124,12 @@ public class ClaseMenu {
     }
     public void mostrarListadoAreas(Hospital hospital)throws IOException{
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
-        String dato;
+        String dato, s;
         ArrayList aux = new ArrayList (hospital.mostrarListadoAreas());
- 
+        
         for(int i=0;i<aux.size();i++){
-            String nombreAreas = (String) aux.get(i);
-            System.out.println(nombreAreas);
+            String[] parts=((String)aux.get(i)).split(",");
+            System.out.println(parts[0]);
         }
         
         System.out.println("Quiere mostrar enfermeras del area (si o no):");
@@ -137,12 +137,9 @@ public class ClaseMenu {
         if(dato.equals("si")){
             System.out.println("Que area desea ver:");
             dato=entrada.readLine();
-            aux = hospital.mostrarEnfermerasArea(dato);
-            for(int i=0;i<aux.size();i++){
-                String mostrar = ((Enfermera)aux.get(i)).Mostrar();
-                mostrarStringsConcatenados(mostrar);
-                System.out.println(" ");
-            }  
+            s = hospital.mostrarEnfermerasArea(dato);
+            mostrarStringsConcatenados(s);
+              
         }
     }
     public void mostrarListadoEnfermeras(Hospital hospital)throws IOException{
@@ -150,7 +147,6 @@ public class ClaseMenu {
         for (int i=0; i<aux.size();i++){
             String s = (String) aux.get(i);
             mostrarStringsConcatenados(s);
-            System.out.println(" ");
         }
     }
     public void marcarEntrada (Hospital hospital) throws  IOException{
@@ -192,6 +188,7 @@ public class ClaseMenu {
             System.out.println(parts[i]);
         }
     } 
+    
     public void menuTurnoDisponibilidad(Hospital hospital)throws IOException{
         int numero = -1;    
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));       
@@ -208,14 +205,13 @@ public class ClaseMenu {
             numero=Integer.parseInt(entrada.readLine());
             switch(numero){           
                 case 1:modificarTurno(hospital);break;            
-                //case 2:modificarDisponibilidad(hospital);break;               
+                case 2:modificarDisponibilidad(hospital);break;               
                 //case 3:modificarTurnoyDisponibilidad(hospital);break;            
                 case 0: break;
                 default: System.out.println("Opcion no valida."); break;   
             }            
         }
-    }
-    
+    }  
     public void modificarTurno(Hospital hospital)throws IOException{
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
         String s = null, turno;
@@ -227,43 +223,44 @@ public class ClaseMenu {
             s=hospital.cambioTurnoEnfermera(dato, turno);                              
         }
         mostrarStringsConcatenados(s);
-    }/*
+    }
     public void modificarDisponibilidad(Hospital hospital)throws IOException{                
+        BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
+        String s = null, aux;
         System.out.println("Ingrese Disponibilidad a modificar (Si/No)");                         
-        String disponibilidad  = entrada.readLine();                        
-        boolean disponibilidadB;
-        if(disponibilidad.equals("Si")) disponibilidadB= true;
-        else{                        
-            if(disponibilidad.equals("No")) disponibilidadB= false;                                                          
-            else System.out.println("Opcion no valida."); break;
-        }                                             
-        System.out.println("Ingrese numero Codigo o Nombre de la enfermera:");                       
-        String dato =entrada.readLine();                       
-        Enfermera enfermera;                       
-        if (isNumeric(dato)==true) enfermera=retornarEnfermera(Integer.parseInt(dato));                       
-        else enfermera=retornarEnfermera(dato);                       
-        cambioTurnoEnfermera(enfermera, disponibilidadB);        
+        aux = entrada.readLine();
+        if(aux.equals("Si")){
+            System.out.println("Ingrese numero Codigo o Nombre de la enfermera:");
+            aux = entrada.readLine();
+            s=hospital.cambioTurnoEnfermera(aux, true);
+        }
+        if(aux.equals("No")){
+            System.out.println("Codigo o nombre enfermera");
+            aux = entrada.readLine();
+            s=hospital.cambioTurnoEnfermera(aux, false);
+        }
+        mostrarStringsConcatenados(s);
+                
+                
     }
     public void modificarTurnoyDisponibilidad(Hospital hospital)throws IOException{
+        BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
+        String turno, disponibilidad, dato, s;
         System.out.println("Ingrese Turno a modificar (dia/noche)");                  
-        String turno = entrada.readLine();                      
+        turno=entrada.readLine();                      
         if(turno.equals("dia") || turno.equals("noche")){                       
             System.out.println("Ingrese Disponibilidad a modificar (Si/No)");                            
-            String disponibilidad  = entrada.readLine();                          
+            disponibilidad  = entrada.readLine();                          
             boolean disponibilidadB;
-            if(disponibilidad.equals("Si")) disponibilidadB= true;                                                         
-            else{                           
-                if(disponibilidad.equals("No")) disponibilidadB= false;                                                                    
-                else System.out.println("Opcion no valida."); break;                               
-            }
+            if(disponibilidad.equals("Si")) disponibilidadB= true;                                                                               
+            if(disponibilidad.equals("No")) disponibilidadB= false;                                                                    
+                                           
             System.out.println("Ingrese numero Codigo o Nombre de la enfermera:");                           
-            String dato =entrada.readLine();                           
-            Enfermera enfermera;                           
-            if (isNumeric(dato)==true) enfermera=retornarEnfermera(Integer.parseInt(dato));                           
-            else enfermera=retornarEnfermera(dato);
-            cambioTurnoEnfermera(enfermera, turno, disponibilidadB);                        
+            dato =entrada.readLine();                           
+            s=hospital.cambioTurnoEnfermera(dato,turno,true);
+            mostrarStringsConcatenados(s);
         }                                  
-    }*/
+    }
     
     public void menuModificar( Hospital hospital)throws IOException{
         int numero2 = -1;    
