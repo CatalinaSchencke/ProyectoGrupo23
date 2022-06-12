@@ -12,52 +12,37 @@ public class Enfermera implements MostrarDatos{
    
     
     public Enfermera(){
-        horasTrabajadas=0;
-        sueldo=0;
+        this.horasTrabajadas=0;
+        this.sueldo=0;
     }
     public Enfermera(String nombre) {
-        horasTrabajadas=0;
-        sueldo=0;
+        this.horasTrabajadas=0;
+        this.sueldo=0;
         this.nombre = nombre;
-        horasDiarias=new IngSalEnfermeras();
+        this.horasDiarias=new IngSalEnfermeras();
     }
     
     public String Mostrar(){
-        String s =this.nombre;
-        if (this.disponibilidad==true){
+        String s =nombre;
+        if (disponibilidad==true){
             s = s.concat(",Si");
         }
-        if(this.disponibilidad==false){
+        if(disponibilidad==false){
             s = s.concat(",No");
         }
-        s = s.concat(","+this.turno);
-        s = s.concat(","+this.codigo);
-        s = s.concat(","+this.contrato);
+        s = s.concat(","+turno);
+        s = s.concat(","+codigo);
+        s = s.concat(","+contrato);
         s = s.concat(",");
         return s;
         
     }
 
-    public void calcularSalario(){
-        if (contrato.equals("HONORARIO")){
-            Salario aux= new Honorario();
-            sueldo=aux.calcularSueldo(horasTrabajadas);
-        }
-        if (contrato.equals("INDEFINIDO")){
-            Salario aux= new Contrato();
-            sueldo=aux.calcularSueldo(horasTrabajadas);
-        }
+    public void calcularSalario(Salario aux){
+        sueldo=aux.calcularSueldo(horasTrabajadas);
     }
-    public String mostrarSalario(){
-        if (contrato.equals("HONORARIO")){
-            Salario aux= new Honorario();   
-            return aux.mostrarSueldo(horasTrabajadas);
-        }
-        if (contrato.equals("INDEFINIDO")){
-            Salario aux= new Contrato();
-            return aux.mostrarSueldo(horasTrabajadas);
-        }
-        return "No se puede mostar el salario";
+    public String mostrarSalario(Salario aux){
+        return aux.mostrarSueldo(sueldo,horasTrabajadas);
     }
     
     public void marcarEntrada(){

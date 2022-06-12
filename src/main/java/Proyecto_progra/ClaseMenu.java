@@ -62,7 +62,7 @@ public class ClaseMenu extends javax.swing.JFrame {
                 }
                 case 7: buscarEnfermera();break;
                 case 8: menuTurnoDisponibilidad();break;
-                case 9: this.hospital.exportarReporte(); break;
+                case 9: hospital.exportarReporte(); break;
                 case 10: menuModificar(); break;
                 case 11:{
                     if (flagCalculo==true){
@@ -78,7 +78,6 @@ public class ClaseMenu extends javax.swing.JFrame {
             
         }
     }
-
     
     public void agregarEnfermera(){
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -144,8 +143,8 @@ public class ClaseMenu extends javax.swing.JFrame {
         System.out.println("Ingrese Codigo o Nombre de la Enfermera");
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
         String dato=entrada.readLine();    
-        Enfermera enf=hospital.generarSalario(dato);
-        System.out.println(enf.mostrarSalario());
+        String s=hospital.generarSalario(dato);
+        System.out.println(s);
     }
     public void buscarEnfermera()throws IOException{
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
@@ -165,19 +164,17 @@ public class ClaseMenu extends javax.swing.JFrame {
         String[] parts=aux.split(",");
         for (int i=0; i<parts.length;i++){
             System.out.println(parts[i]);
+            System.out.println(" ");
         }
     } 
     
     public void menuTurnoDisponibilidad()throws IOException{
-        
-        java.awt.EventQueue.invokeLater(new Runnable() {
+        java.awt.EventQueue.invokeLater(new Runnable(){
             public void run() {
                 new Ventana_MenuDisponibilidad(hospital).setVisible(true);
             }
         });
-       
     }  
-    
     
     public void menuModificar()throws IOException{
         int numero2 = -1;    
@@ -213,7 +210,6 @@ public class ClaseMenu extends javax.swing.JFrame {
             if (hospital.existeEnfermera(aux)==true)break;
         }while(true==true);
         hospital.eliminarEnfermeraHospital(aux);
-        //System.out.println("Eliminado correctamente.");
     }
     public void eliminarEnfermeraArea()throws IOException{
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));  
@@ -252,8 +248,5 @@ public class ClaseMenu extends javax.swing.JFrame {
         }
         
         hospital.eliminarArea(dato);
-    }
-    public Hospital getHospital (){
-        return hospital;
     }
 }

@@ -15,16 +15,16 @@ public class IngSalEnfermeras {
         return horasAcumuladas;
     } 
     public void marcarEntrada(){
-        double hh = LocalDateTime.now().getHour();
+        /*double hh = LocalDateTime.now().getHour();
         double mm = LocalDateTime.now().getMinute();
-        horaEntrada= hh + (mm/60);  
+        horaEntrada= hh + (mm/60);*/
         horaEntrada=9;
     }
     public void marcarSalida(){
-        double hh = LocalDateTime.now().getHour();
+        /*double hh = LocalDateTime.now().getHour();
         double mm = LocalDateTime.now().getMinute();
-        horaSalida= hh + (mm/60);
-        
+        horaSalida= hh + (mm/60);*/
+        horaSalida=21;
     }
     
     //Getter y setter

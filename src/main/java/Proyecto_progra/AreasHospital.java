@@ -1,14 +1,12 @@
 package Proyecto_progra;
-/*Usar lista para guardar a las 4 enfermeras por area*/
-import java.util.*;
 
 public class AreasHospital implements MostrarDatos{
-    private ArrayList<Enfermera> enfermerasArea ;
+    private ListaEnfermerasArea enfermerasArea;
     private String nombre;
     
     public AreasHospital(){}
     public AreasHospital(String nombre) {
-        this.enfermerasArea = new ArrayList<>();
+        this.enfermerasArea = new ListaEnfermerasArea();
         this.nombre = nombre;
     }
     
@@ -21,7 +19,7 @@ public class AreasHospital implements MostrarDatos{
     }
     
     public void agregarListaEnfermeras (Enfermera enfermera){
-        this.enfermerasArea.add(enfermera);
+        enfermerasArea.add(enfermera);
     }
     
     public Enfermera obtenerEnfermera( int index){ 

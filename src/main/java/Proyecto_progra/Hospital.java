@@ -5,16 +5,14 @@ import java.util.*;
 
 public class Hospital{
     private String nombre;
-    private ListaDeAreas areasHospital ;
-    private HashMap<Integer,Enfermera> enfermerasCodigo;
-    private HashMap<String,Enfermera> enfermerasNombre;
+    private ListaDeAreas areasHospital;
+    private ListaEnfermerasHospital enfermerasHospital;
     
     public Hospital(){}
     public Hospital(String nombre) {
         this.nombre = nombre;
         this.areasHospital = new ListaDeAreas();
-        this.enfermerasCodigo = new HashMap<>();
-        this.enfermerasNombre = new HashMap<>();
+        this.enfermerasHospital = new ListaEnfermerasHospital();
     }
     public String getNombre() {
         return nombre;
@@ -29,13 +27,11 @@ public class Hospital{
         areasHospital.get(obtenerIndex(parts[0])).eliminarListaEnfermeras(parts[1]);
         
     }
-    public void eliminarEnfermeraHospital(String aux){
-
-        Enfermera ee = enfermerasNombre.remove(aux);
-        enfermerasCodigo.remove(ee.getCodigo());
+    public void eliminarEnfermeraHospital(String nombre){
+        enfermerasHospital.remove(nombre);
         for (int i=0;i<areasHospital.size();i++){
-            if(areasHospital.get(i).existeEnfermera(aux)){
-                areasHospital.get(i).eliminarListaEnfermeras(aux);
+            if(areasHospital.get(i).existeEnfermera(nombre)){
+                areasHospital.get(i).eliminarListaEnfermeras(nombre);
                 
             }
         }
@@ -50,36 +46,36 @@ public class Hospital{
             return false;
         }
         AreasHospital aux2 = new AreasHospital(dato);
-        this.areasHospital.add(aux2);
+        areasHospital.add(aux2);
         return true; 
     }
     public boolean agregarEnfermera(String dato){
         String[] parts=dato.split(",");
         System.out.println(dato);
-        Enfermera nurse = new Enfermera(parts[0]);
+        Enfermera enfermera = new Enfermera(parts[0]);
 
-        if (parts[1].equals("true")) nurse.setDisponibilidad(true);
-        else if (parts[1].equals("false")) nurse.setDisponibilidad(false);
+        if (parts[1].equals("true")) enfermera.setDisponibilidad(true);
+        else if (parts[1].equals("false")) enfermera.setDisponibilidad(false);
         else return false;
-        nurse.setTurno(parts[3]);
+        enfermera.setTurno(parts[3]);
        
         int max=0;
-        for (int i : this.enfermerasCodigo.keySet()) if (i > max) max = i;
-        nurse.setCodigo(max+1);
+        for (int i : enfermerasHospital.keySet()) {
+            if (i > max) max = i;
+        }
+        enfermera.setCodigo(max+1);
         
-        nurse.setContrato("INDEFINIDO");
+        enfermera.setContrato("INDEFINIDO");
         
         //agregar a la lista
-        this.areasHospital.get(obtenerIndex(parts[3])).agregarListaEnfermeras(nurse);
+        areasHospital.get(obtenerIndex(parts[3])).agregarListaEnfermeras(enfermera);
         //agregar al mapa
-        this.enfermerasNombre.put(nurse.getNombre(), nurse);
-        this.enfermerasCodigo.put(nurse.getCodigo(), nurse);
+        enfermerasHospital.put(enfermera);
 
         return true;
     }
     public void modificarEnMapasListas(Enfermera enf){
-        enfermerasCodigo.put(enf.getCodigo(), enf);
-        enfermerasNombre.put(enf.getNombre(), enf);
+        enfermerasHospital.put(enf);
         for (int i=0;i<areasHospital.size();i++){
             if(areasHospital.get(i).existeEnfermera(enf.getNombre())){
                 areasHospital.get(i).eliminarListaEnfermeras(enf.getNombre());
@@ -109,14 +105,13 @@ public class Hospital{
     public ArrayList mostrarListadoEnfermeras(){
         ArrayList aux = new ArrayList();
         
-        for(Enfermera enfermera : this.enfermerasNombre.values()){
+        for(Enfermera enfermera : enfermerasHospital.values()){
             aux.add(enfermera.Mostrar());
         }
         return aux;
     }
     //Marcar Entrada y Salida
     public void marcarEntrada( String dato){
-
         if (isNumeric(dato)){
             int datoInt = Integer.parseInt(dato);
             Enfermera enf= retornarEnfermera(datoInt);
@@ -130,7 +125,6 @@ public class Hospital{
         } 
     }
     public void marcarSalida(String dato) {
-
         if (isNumeric(dato)){
             int datoInt = Integer.parseInt(dato);
             Enfermera enf= retornarEnfermera(datoInt);
@@ -143,19 +137,41 @@ public class Hospital{
             modificarEnMapasListas(enf);
         }
     }
-    public Enfermera generarSalario( String dato ){
+    public String generarSalario( String dato ){
+        String s=null;
         if (isNumeric(dato)){
             int datoInt = Integer.parseInt(dato);
             Enfermera enf = retornarEnfermera(datoInt);
+            if (enf.getContrato().equals("HONORARIO")){
+                Salario aux=new Honorario();
+                enf.calcularSalario(aux);
+                s=enf.mostrarSalario(aux);
+            }
+            if (enf.getContrato().equals("INDEFINIDO")){
+                Salario aux= new Contrato();
+                enf.calcularSalario(aux);
+                s=enf.mostrarSalario(aux);
+            }
+            
             modificarEnMapasListas(enf);
-            return enf;
-            //enf.mostrarSalario();    
+            return s;
+                
         }
         else {
             Enfermera enf = retornarEnfermera(dato);
-            enf.mostrarSalario();
+            if (enf.getContrato().equals("HONORARIO")){
+                Salario aux= new Honorario();
+                enf.calcularSalario(aux);
+                s=enf.mostrarSalario(aux);
+            }
+            if (enf.getContrato().equals("INDEFINIDO")){
+                Salario aux= new Contrato();
+                enf.calcularSalario(aux);
+                s=enf.mostrarSalario(aux);
+            }
+            
             modificarEnMapasListas(enf);
-            return enf;
+            return s;
         }
     }
     /*Uso de datos de Archivos*/
@@ -174,9 +190,7 @@ public class Hospital{
                 enfermera.setContrato(parts[3]);
                 if(numeroClave%2==0)enfermera.setDisponibilidad(true);
                 else enfermera.setDisponibilidad(false);
-                this.enfermerasCodigo.put(enfermera.getCodigo(), enfermera);
-                this.enfermerasNombre.put(enfermera.getNombre(), enfermera);
-                
+                enfermerasHospital.put(enfermera);
                 if(buscarArea(parts[0])==false || areasHospital.size()==13){
                     AreasHospital area= new AreasHospital(parts[0]);
                     areasHospital.add(area);
@@ -266,8 +280,8 @@ public class Hospital{
     /*Buscar en las colecciones*/
     public String buscarEnfermera(int codigo){
         Enfermera enfermera;
-        if(enfermerasCodigo.containsKey(codigo)==true){
-            enfermera=enfermerasCodigo.get(codigo);
+        if(enfermerasHospital.containsKey(codigo)==true){
+            enfermera=enfermerasHospital.get(codigo);
             String s = enfermera.Mostrar();
             return s;
         }else return ("No existe ese codigo de enfermera,");
@@ -275,14 +289,14 @@ public class Hospital{
     public String buscarEnfermera(String nombre){
         Enfermera enfermera;
         
-        if(enfermerasNombre.containsKey(nombre)==true){
-            enfermera=enfermerasNombre.get(nombre);
+        if(enfermerasHospital.containsKey(nombre)==true){
+            enfermera=enfermerasHospital.get(nombre);
             String s = enfermera.Mostrar();
             return s;
         }else return ("Nombre de enfermera no encontrado,");
     }
     public boolean existeEnfermera(String nombre){
-        if (enfermerasNombre.containsKey(nombre)==true){
+        if (enfermerasHospital.containsKey(nombre)==true){
             return true;
         }
         return false;
@@ -297,13 +311,13 @@ public class Hospital{
     }
     /*Metodos asociados a las funciones*/
     public Enfermera retornarEnfermera (int codigo){
-        if(enfermerasCodigo.containsKey(codigo)==true)return enfermerasCodigo.get(codigo);
+        if(enfermerasHospital.containsKey(codigo)==true)return enfermerasHospital.get(codigo);
         else System.out.println("No existe ese codigo de enfermera");
         
         return null ;
     }
     public Enfermera retornarEnfermera (String nombre){
-        if(enfermerasNombre.containsKey(nombre)==true)return enfermerasNombre.get(nombre);
+        if(enfermerasHospital.containsKey(nombre)==true)return enfermerasHospital.get(nombre);
         else System.out.println("No existe ese nombre de enfermera");
         
         return null ;

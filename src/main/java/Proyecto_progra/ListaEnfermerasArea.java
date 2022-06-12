@@ -2,14 +2,14 @@ package Proyecto_progra;
 
 import java.util.ArrayList;
 
-public class ListaDeAreas {
-    private ArrayList<AreasHospital> list ;
+public class ListaEnfermerasArea {
+    private ArrayList<Enfermera> list ;
     
-    public ListaDeAreas() {
+    public ListaEnfermerasArea() {
         this.list = new ArrayList<>();
     }
     
-    public AreasHospital get (int index){
+    public Enfermera get (int index){
         return list.get(index);
     }
     public void remove (int index){
@@ -18,8 +18,8 @@ public class ListaDeAreas {
     public int size (){
         return list.size();
     }
-    public void add (AreasHospital area){
-        list.add(area);
+    public void add (Enfermera enfermera){
+        list.add(enfermera);
     }
     
 }

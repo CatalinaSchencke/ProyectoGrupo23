@@ -13,7 +13,7 @@ public class Contrato extends Salario {
         sueldo= (int) (7500*horasExtra) + 700000;
         return sueldo;    
     }
-    public String mostrarSueldo( double horas){
-        return ("Se genero un salario de " + calcularSueldo(horas) + " por contrato en base a "+  horas  + " horas trabajadas.");
+    public String mostrarSueldo(int sueldo, double horas){
+        return ("Se genero un salario de " + sueldo + " por contrato en base a "+  horas  + " horas trabajadas.");
     }
 }
