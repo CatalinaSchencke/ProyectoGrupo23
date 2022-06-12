@@ -38,6 +38,7 @@ public class ClaseMenu extends javax.swing.JFrame {
             System.out.println("9. Generar Reporte.");
             System.out.println("10. Modificacion y Eliminacion.");
             System.out.println("11. Generar Salario.");
+            System.out.println("12. Mostrar enfermera mejor pagada.");
             System.out.println("0. Salir.");
             System.out.println("Seleccione el numero para operar:");
             
@@ -71,7 +72,8 @@ public class ClaseMenu extends javax.swing.JFrame {
                     }  
                     else System.out.println("Primero marque la salida de su ultimo turno antes de calcular.");
                     break;
-                } 
+                }
+                case 12: mejorPagada(); break;
                 case 0: break;
                 default: System.out.println("Opcion no valida."); break;
             }
@@ -176,6 +178,12 @@ public class ClaseMenu extends javax.swing.JFrame {
         });
     }  
     
+    
+    public void mejorPagada(){
+        mostrarStringsConcatenados(hospital.mejorPagada());
+        //String aux = hospital.mejorPagada();
+        //System.out.println("La Enfermera mejor pagada es: "+ aux);
+    }
     public void menuModificar()throws IOException{
         int numero2 = -1;    
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));       

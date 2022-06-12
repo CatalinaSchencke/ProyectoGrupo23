@@ -309,6 +309,34 @@ public class Hospital{
         }
         return false;
     }
+    public String mejorPagada(){
+        int aux2=0; 
+        String aux1=null;
+        for(int i=0; i<areasHospital.size(); i++){
+            AreasHospital aux = areasHospital.get(i);
+            //System.out.println("No existe ese codigo de enfermera 33");
+            for (int k=0; k<aux.obtenerSize(); k++){
+                Enfermera ef= aux.obtenerEnfermera(k);
+                //System.out.println("No existe ese codigo de enfermera 1");
+                if (ef.getSueldo()>aux2){
+                    //System.out.println("No existe ese codigo de enfermera 1" + ef.getSueldo());
+                    aux1=ef.getNombre();
+                    aux2=ef.getSueldo();
+                    
+                }
+            }      
+        }
+        String s;
+        s="Nombre: ";
+        s=s.concat(aux1+"\n");
+        s=s.concat("Sueldo: ");
+        s=s.concat(Integer.toString(aux2)+",");
+        
+        return s; //System.out.println("La/El enfermera(o) mejor pagado es: " + aux1 + " " + "Su sueldo es: " + aux2);
+        
+    }
+ 
+
     /*Metodos asociados a las funciones*/
     public Enfermera retornarEnfermera (int codigo){
         if(enfermerasHospital.containsKey(codigo)==true)return enfermerasHospital.get(codigo);

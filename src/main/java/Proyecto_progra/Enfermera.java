@@ -90,4 +90,10 @@ public class Enfermera implements MostrarDatos{
     public void setHorasTrabajadas(double horasTrabajadas) {
         this.horasTrabajadas = horasTrabajadas;
     }
+    public int getSueldo(){
+        return sueldo;
+    }
+    public void setSueldo(){
+        this.sueldo=sueldo;
+    }
 }
