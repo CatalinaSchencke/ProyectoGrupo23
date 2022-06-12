@@ -59,8 +59,8 @@ public class Hospital{
         Enfermera nurse = new Enfermera(parts[0]);
 
         if (parts[1].equals("true")) nurse.setDisponibilidad(true);
-        if (parts[1].equals("false")) nurse.setDisponibilidad(false);
-
+        else if (parts[1].equals("false")) nurse.setDisponibilidad(false);
+        else return false;
         nurse.setTurno(parts[3]);
        
         int max=0;

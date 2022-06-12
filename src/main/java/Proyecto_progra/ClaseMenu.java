@@ -3,14 +3,19 @@ package Proyecto_progra;
 import java.io.*;
 import java.util.*;
 
-public class ClaseMenu {
+public class ClaseMenu extends javax.swing.JFrame {
+    
     
     Hospital hospital;
     
+    public ClaseMenu() {
+        this.hospital = new Hospital("Alexander Fleming");
+        hospital.cargarDatos();
+    }
+    
     
     public void menuHospital()throws IOException{
-        Hospital hospital = new Hospital("Alexander Fleming");
-        hospital.cargarDatos();
+        
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));       
         int numero = -1;
         int aux = 0;
@@ -38,30 +43,30 @@ public class ClaseMenu {
             
             numero=Integer.parseInt(entrada.readLine());
             switch(numero){
-                case 1: agregarEnfermera(hospital); break;
-                case 2: agregarArea(hospital); break;
-                case 3: mostrarListadoAreas(hospital);break;
-                case 4: mostrarListadoEnfermeras(hospital); break;
+                case 1: agregarEnfermera(); break;
+                case 2: agregarArea(); break;
+                case 3: mostrarListadoAreas();break;
+                case 4: mostrarListadoEnfermeras(); break;
                 case 5: {
-                    marcarEntrada(hospital);
+                    marcarEntrada();
                     aux=1;
                     break;
                 }
                 case 6: {
                     if (aux==1){
-                        marcarSalida(hospital);
+                        marcarSalida();
                         flagCalculo=true;
                     }
                     break;
                     
                 }
-                case 7: buscarEnfermera(hospital);break;
-                case 8: menuTurnoDisponibilidad(hospital);break;
-                case 9: hospital.exportarReporte(); break;
-                case 10: menuModificar(hospital); break;
+                case 7: buscarEnfermera();break;
+                case 8: menuTurnoDisponibilidad();break;
+                case 9: this.hospital.exportarReporte(); break;
+                case 10: menuModificar(); break;
                 case 11:{
                     if (flagCalculo==true){
-                        generarSalario(hospital);
+                        generarSalario();
                         flagCalculo=false;
                     }  
                     else System.out.println("Primero marque la salida de su ultimo turno antes de calcular.");
@@ -73,42 +78,16 @@ public class ClaseMenu {
             
         }
     }
-    public void agregarEnfermera(Hospital hospital)throws IOException{
-        BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
-        String dato;
-        int cont=0;
-        while(true){
-            System.out.println("Ingrese Nombre de la enfermera");
-            dato=entrada.readLine();
-            if (hospital.existeEnfermera(dato)==false)break;
-            if(cont==3)return;
-            System.out.println("Tiene "+(3-cont)+" intentos mas:");
-            cont++;
-        }
-        String s=dato;
-        System.out.println("Ingrese disponibilidad (true / false )");
-        dato=entrada.readLine();
-        s=s.concat(","+dato);
-        System.out.println("Ingrese turno (dia / noche)");
-        dato=entrada.readLine();
-        s=s.concat(","+dato);
-        while(true){
-            System.out.println("Ingrese el area al que pertenece(Todo con Mayusculas)");
-            dato=entrada.readLine();
-            if (hospital.buscarArea(dato)==true)break;
-            if (cont==3)return;
-            System.out.println("Tiene "+(3-cont)+" intentos mas:");
-            cont++;
-        }
-        s=s.concat(","+dato);
-        boolean aux = hospital.agregarEnfermera(s);
-        if(aux==true){
-            System.out.println("Se agrego exitosamente.");
-        }else{
-            System.out.println("Hubo un error al ingresar la enfermera.");
-        }
+
+    
+    public void agregarEnfermera(){
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Ventana_AgregarEnfermera(hospital).setVisible(true);
+            }
+        });
     }
-    public void agregarArea (Hospital hospital) throws IOException {
+    public void agregarArea () throws IOException {
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
         String dato;
         
@@ -122,7 +101,7 @@ public class ClaseMenu {
         }
     
     }
-    public void mostrarListadoAreas(Hospital hospital)throws IOException{
+    public void mostrarListadoAreas()throws IOException{
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
         String dato, s;
         ArrayList aux = new ArrayList (hospital.mostrarListadoAreas());
@@ -142,33 +121,33 @@ public class ClaseMenu {
               
         }
     }
-    public void mostrarListadoEnfermeras(Hospital hospital)throws IOException{
+    public void mostrarListadoEnfermeras()throws IOException{
         ArrayList aux = hospital.mostrarListadoEnfermeras();
         for (int i=0; i<aux.size();i++){
             String s = (String) aux.get(i);
             mostrarStringsConcatenados(s);
         }
     }
-    public void marcarEntrada (Hospital hospital) throws  IOException{
+    public void marcarEntrada () throws  IOException{
         System.out.println("Ingrese Codigo o Nombre de la Enfermera");
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
         String dato=entrada.readLine();
         hospital.marcarEntrada(dato);
     }
-    public void marcarSalida(Hospital hospital) throws IOException{
+    public void marcarSalida() throws IOException{
         System.out.println("Ingrese Codigo o Nombre de la Enfermera");
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
         String dato=entrada.readLine();
         hospital.marcarSalida(dato);
     }
-    public void generarSalario (Hospital hospital) throws IOException{
+    public void generarSalario () throws IOException{
         System.out.println("Ingrese Codigo o Nombre de la Enfermera");
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
         String dato=entrada.readLine();    
         Enfermera enf=hospital.generarSalario(dato);
         System.out.println(enf.mostrarSalario());
     }
-    public void buscarEnfermera(Hospital hospital)throws IOException{
+    public void buscarEnfermera()throws IOException{
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Ingrese numero Codigo o Nombre de la enfermera:");
         String dato=entrada.readLine();
@@ -189,80 +168,18 @@ public class ClaseMenu {
         }
     } 
     
-    public void menuTurnoDisponibilidad(Hospital hospital)throws IOException{
-        int numero = -1;    
-        BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));       
-        while(numero != 0){        
-            System.out.println("-----------------------------------------");            
-            System.out.println("     Seleccione que cambio desea hacer");
-            System.out.println("-----------------------------------------");           
-            System.out.println("1. Modificar Turno.");
-            System.out.println("2. Modificar Disponibilidad.");            
-            System.out.println("3. Modificar Turno y Disponibilidad.");
-            System.out.println("0. Salir");            
-            System.out.println("Seleccione el numero para operar:");
-         
-            numero=Integer.parseInt(entrada.readLine());
-            switch(numero){           
-                case 1:modificarTurno(hospital);break;            
-                case 2:modificarDisponibilidad(hospital);break;               
-                //case 3:modificarTurnoyDisponibilidad(hospital);break;            
-                case 0: break;
-                default: System.out.println("Opcion no valida."); break;   
-            }            
-        }
+    public void menuTurnoDisponibilidad()throws IOException{
+        
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Ventana_MenuDisponibilidad(hospital).setVisible(true);
+            }
+        });
+       
     }  
-    public void modificarTurno(Hospital hospital)throws IOException{
-        BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
-        String s = null, turno;
-        System.out.println("Ingrese Turno a modificar (dia/noche)");                                        
-        turno = entrada.readLine();                                      
-        if(turno.equals("dia") || turno.equals("noche")){                       
-            System.out.println("Ingrese numero Codigo o Nombre de la enfermera:");                            
-            String dato=entrada.readLine();                           
-            s=hospital.cambioTurnoEnfermera(dato, turno);                              
-        }
-        mostrarStringsConcatenados(s);
-    }
-    public void modificarDisponibilidad(Hospital hospital)throws IOException{                
-        BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
-        String s = null, aux;
-        System.out.println("Ingrese Disponibilidad a modificar (Si/No)");                         
-        aux = entrada.readLine();
-        if(aux.equals("Si")){
-            System.out.println("Ingrese numero Codigo o Nombre de la enfermera:");
-            aux = entrada.readLine();
-            s=hospital.cambioTurnoEnfermera(aux, true);
-        }
-        if(aux.equals("No")){
-            System.out.println("Codigo o nombre enfermera");
-            aux = entrada.readLine();
-            s=hospital.cambioTurnoEnfermera(aux, false);
-        }
-        mostrarStringsConcatenados(s);
-                
-                
-    }
-    public void modificarTurnoyDisponibilidad(Hospital hospital)throws IOException{
-        BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
-        String turno, disponibilidad, dato, s;
-        System.out.println("Ingrese Turno a modificar (dia/noche)");                  
-        turno=entrada.readLine();                      
-        if(turno.equals("dia") || turno.equals("noche")){                       
-            System.out.println("Ingrese Disponibilidad a modificar (Si/No)");                            
-            disponibilidad  = entrada.readLine();                          
-            boolean disponibilidadB;
-            if(disponibilidad.equals("Si")) disponibilidadB= true;                                                                               
-            if(disponibilidad.equals("No")) disponibilidadB= false;                                                                    
-                                           
-            System.out.println("Ingrese numero Codigo o Nombre de la enfermera:");                           
-            dato =entrada.readLine();                           
-            s=hospital.cambioTurnoEnfermera(dato,turno,true);
-            mostrarStringsConcatenados(s);
-        }                                  
-    }
     
-    public void menuModificar( Hospital hospital)throws IOException{
+    
+    public void menuModificar()throws IOException{
         int numero2 = -1;    
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));       
         while(numero2 != 0){        
@@ -278,16 +195,16 @@ public class ClaseMenu {
       
             numero2=Integer.parseInt(entrada.readLine());
             switch(numero2){           
-                case 1: eliminarEnfermeraArea(hospital);break;
-                case 2: eliminarEnfermeraHospital(hospital);break;
-                case 3: cambiarNombreArea(hospital);break;
-                case 4: eliminarArea(hospital);break;                
+                case 1: eliminarEnfermeraArea();break;
+                case 2: eliminarEnfermeraHospital();break;
+                case 3: cambiarNombreArea();break;
+                case 4: eliminarArea();break;                
                 case 0: break;
                 default: System.out.println("Opcion no valida."); break;   
             }
         }
     }
-    public void eliminarEnfermeraHospital (Hospital hospital) throws IOException{
+    public void eliminarEnfermeraHospital () throws IOException{
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));  
         String aux;
         do{
@@ -298,7 +215,7 @@ public class ClaseMenu {
         hospital.eliminarEnfermeraHospital(aux);
         //System.out.println("Eliminado correctamente.");
     }
-    public void eliminarEnfermeraArea(Hospital hospital)throws IOException{
+    public void eliminarEnfermeraArea()throws IOException{
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));  
         String dato, s;
         System.out.println("Ingrese Area de enfermera a eliminar:");
@@ -311,7 +228,7 @@ public class ClaseMenu {
         s = s.concat(dato+",");
         hospital.eliminarEnfermeraArea(s);
     }
-    public void cambiarNombreArea(Hospital hospital)throws IOException{
+    public void cambiarNombreArea()throws IOException{
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
         String dato, s;
         System.out.println("Nombre del Area a cambiar:");
@@ -324,7 +241,7 @@ public class ClaseMenu {
         hospital.cambiarNombreArea(s);
         
     }
-    public void eliminarArea(Hospital hospital)throws IOException{
+    public void eliminarArea()throws IOException{
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));  
         String dato;
         System.out.println("Ingrese nombre de area");
@@ -335,5 +252,8 @@ public class ClaseMenu {
         }
         
         hospital.eliminarArea(dato);
+    }
+    public Hospital getHospital (){
+        return hospital;
     }
 }
