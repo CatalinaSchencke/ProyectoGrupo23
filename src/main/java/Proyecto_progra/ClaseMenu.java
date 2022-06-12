@@ -38,7 +38,7 @@ public class ClaseMenu extends javax.swing.JFrame {
             System.out.println("9. Generar Reporte.");
             System.out.println("10. Modificacion y Eliminacion.");
             System.out.println("11. Generar Salario.");
-            System.out.println("12. Mostrar enfermera mejor pagada.");
+            System.out.println("12. Mostrar enfermera mejor pagada. (Para el uso de esta funcion requiere previamente que se haya generado un salario)");
             System.out.println("0. Salir.");
             System.out.println("Seleccione el numero para operar:");
             
