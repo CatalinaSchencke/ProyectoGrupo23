@@ -122,11 +122,11 @@ public class ClaseMenu extends javax.swing.JFrame {
         }
     }
     public void mostrarListadoEnfermeras()throws IOException{
-        ArrayList aux = hospital.mostrarListadoEnfermeras();
-        for (int i=0; i<aux.size();i++){
-            String s = (String) aux.get(i);
-            mostrarStringsConcatenados(s);
-        }
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Ventana_MostrarEnfermeras(hospital).setVisible(true);
+            }
+        });
     }
     public void marcarEntrada () throws  IOException{
         System.out.println("Ingrese Codigo o Nombre de la Enfermera");

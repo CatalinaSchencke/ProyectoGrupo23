@@ -23,17 +23,17 @@ public class Enfermera implements MostrarDatos{
     }
     
     public String Mostrar(){
-        String s ="Nombre: "+this.nombre;
+        String s =this.nombre;
         if (this.disponibilidad==true){
-            s = s.concat(",Disponibilidad Inmediata: Si");
+            s = s.concat(",Si");
         }
         if(this.disponibilidad==false){
-            s = s.concat(",Disponibilidad Inmediata: No");
+            s = s.concat(",No");
         }
-        s = s.concat(",Turno: "+this.turno);
-        s = s.concat(",Codigo Asignado: "+this.codigo);
-        s = s.concat(",Tipo de Contrato: "+this.contrato);
-        s = s.concat("\n,");
+        s = s.concat(","+this.turno);
+        s = s.concat(","+this.codigo);
+        s = s.concat(","+this.contrato);
+        s = s.concat(",");
         return s;
         
     }
