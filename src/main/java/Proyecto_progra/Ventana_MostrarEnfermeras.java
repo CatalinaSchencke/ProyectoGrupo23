@@ -24,6 +24,7 @@ public class Ventana_MostrarEnfermeras extends javax.swing.JFrame {
         initComponents();
         this.hospital=hospital;
         addRowToJtable();
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
     
 
@@ -46,7 +47,7 @@ public class Ventana_MostrarEnfermeras extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Nombre", "Disponibilidad", "Turno", "Codigo Enfermera"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
