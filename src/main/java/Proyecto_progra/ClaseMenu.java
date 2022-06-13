@@ -5,16 +5,17 @@ import java.util.*;
 
 public class ClaseMenu extends javax.swing.JFrame {
     
-    //Instancia
+    //Instancia de hospital
     Hospital hospital;
         
-    //
+    /*Cuando se construye esta clase se crea el hospital y a la vez se cargan 
+    los datos*/
     public ClaseMenu() {
         this.hospital = new Hospital("Alexander Fleming");
         hospital.cargarDatos();
     }
     
-    
+    /*Menu que se muestra por pantalla, corresponde al menu proncipal*/
     public void menuHospital()throws IOException{
         
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));       
@@ -82,6 +83,8 @@ public class ClaseMenu extends javax.swing.JFrame {
         }
     }
     
+    /*Funcion que llama a una ventana para agregar una enfermera a las colecciones
+    del hospital*/
     public void agregarEnfermera(){
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -89,6 +92,8 @@ public class ClaseMenu extends javax.swing.JFrame {
             }
         });
     }
+    /*Agrega un area en el hospital llamando a la funcion con el mismo nombre 
+    desde el menu*/
     public void agregarArea () throws IOException {
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
         String dato;
@@ -103,6 +108,8 @@ public class ClaseMenu extends javax.swing.JFrame {
         }
     
     }
+    /*Muestra los nombres de las areas por pantalla, para luego, preguntar
+    si quiere mostrar las enfermeras de un area en especifico*/
     public void mostrarListadoAreas()throws IOException{
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
         String dato, s;
@@ -123,6 +130,8 @@ public class ClaseMenu extends javax.swing.JFrame {
               
         }
     }
+    /*Llama a una ventana donde muestra en una tabla a todas las enfermeras
+    del hospital*/
     public void mostrarListadoEnfermeras()throws IOException{
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -130,18 +139,27 @@ public class ClaseMenu extends javax.swing.JFrame {
             }
         });
     }
+    /*Esta funcion llama a una del mismo nombre dentro de la clase hospital y marca
+    la hora exacta de entrada de una enfermera al trabajo*/
     public void marcarEntrada () throws  IOException{
         System.out.println("Ingrese Codigo o Nombre de la Enfermera");
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
         String dato=entrada.readLine();
         hospital.marcarEntrada(dato);
     }
+    /*Esta funcion llama a una del mismo nombre dentro de la clase hospital y marca
+    la hora exacta de salida de una enfermera al trabajo, cabe destacar que para 
+    usar esta funcion primero hay que marcar la entrada, lo cual se hace en el 
+    menuHospital esta verificacion*/
     public void marcarSalida() throws IOException{
         System.out.println("Ingrese Codigo o Nombre de la Enfermera");
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
         String dato=entrada.readLine();
         hospital.marcarSalida(dato);
     }
+    /*Llama a la funcion del mismo nombre en el hospital para generar su salario,
+    y al igual que la funcion de arriba se necesita haber marcado primero una 
+    entrada y salida para generar este salario*/
     public void generarSalario () throws IOException{
         System.out.println("Ingrese Codigo o Nombre de la Enfermera");
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
@@ -149,6 +167,8 @@ public class ClaseMenu extends javax.swing.JFrame {
         String s=hospital.generarSalario(dato);
         System.out.println(s);
     }
+    /*Pide el nombre por pantalla para buscar a una enfermera en el hospital y
+    retornarla por pantalla*/
     public void buscarEnfermera()throws IOException{
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Ingrese numero Codigo o Nombre de la enfermera:");
@@ -162,7 +182,8 @@ public class ClaseMenu extends javax.swing.JFrame {
         }
 
     }
-
+    /*Funcion que se usa para mostrar strings que estan concatenados por comas
+    por pantalla. Estos strings tienen siempre la forma de "linea1,linea2,..,"*/
     public void mostrarStringsConcatenados(String aux){
         String[] parts=aux.split(",");
         for (int i=0; i<parts.length;i++){
@@ -170,7 +191,10 @@ public class ClaseMenu extends javax.swing.JFrame {
             System.out.println(" ");
         }
     } 
-    
+    /*Menu secundario al menu principal(menuHospital) que se ejecuta en ventana
+    y tiene otras funciones que tambien se ejecutan en ventana que son parte de
+    la funcionalidad, estas son: cambiar turno, cambiar disponibilidad y el
+    cambio de turno y disponibilidad al mismo tiempo*/
     public void menuTurnoDisponibilidad()throws IOException{
         java.awt.EventQueue.invokeLater(new Runnable(){
             public void run() {
@@ -179,12 +203,15 @@ public class ClaseMenu extends javax.swing.JFrame {
         });
     }  
     
-    
+    /*Funcion que muestra por pantalla a la enfermera mejor pagada del hospital*/
     public void mejorPagada(){
         mostrarStringsConcatenados(hospital.mejorPagada());
         //String aux = hospital.mejorPagada();
         //System.out.println("La Enfermera mejor pagada es: "+ aux);
     }
+    /*Segundo menu secundario que tambien sale del menu principal(menuHospital)
+    de donde al igual que el anterior tiene funciones asociadas a la funcionalidad
+    del codigo*/
     public void menuModificar()throws IOException{
         int numero2 = -1;    
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));       
@@ -210,6 +237,8 @@ public class ClaseMenu extends javax.swing.JFrame {
             }
         }
     }
+    /*Esta funcion llama al hospital para eliminar a una enfermera de todo el 
+    sistema*/
     public void eliminarEnfermeraHospital () throws IOException{
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));  
         String aux;
@@ -220,6 +249,8 @@ public class ClaseMenu extends javax.swing.JFrame {
         }while(true==true);
         hospital.eliminarEnfermeraHospital(aux);
     }
+    /*Esta funcion llama al hospital para eliminar a una enfermera del area
+    pero no del hospital*/
     public void eliminarEnfermeraArea()throws IOException{
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));  
         String dato, s;
@@ -233,6 +264,7 @@ public class ClaseMenu extends javax.swing.JFrame {
         s = s.concat(dato+",");
         hospital.eliminarEnfermeraArea(s);
     }
+    /*Funcion que llama a hospital para cambiar el nombre de un area*/
     public void cambiarNombreArea()throws IOException{
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); 
         String dato, s;
@@ -246,6 +278,7 @@ public class ClaseMenu extends javax.swing.JFrame {
         hospital.cambiarNombreArea(s);
         
     }
+    /*Funcion que llama a hospital para eliminar un area del hospital*/
     public void eliminarArea()throws IOException{
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));  
         String dato;

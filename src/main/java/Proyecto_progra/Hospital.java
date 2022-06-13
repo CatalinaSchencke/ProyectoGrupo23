@@ -4,10 +4,12 @@ import java.io.*;
 import java.util.*;
 
 public class Hospital{
+    /*Atributos de hospital, donde ListaDeAreas es una clase wrapper al igual
+    que ListaEnfermerasHospital*/
     private String nombre;
     private ListaDeAreas areasHospital;
     private ListaEnfermerasHospital enfermerasHospital;
-    
+    //Constructor, getter y setters
     public Hospital(){}
     public Hospital(String nombre) {
         this.nombre = nombre;
@@ -21,12 +23,17 @@ public class Hospital{
         this.nombre = nombre;
     }
     
-    /*Eliminar de las colecciones*/
+    /*Funciones asociadas a eliminar de las colecciones*/
+    
+    /*Elimina a una enfermera de un area segun los datos que recibe de tipo
+    String de forma: "nombreArea,nombreEnfermera", esto de la coleccion
+    ListaDeAreas*/
     public void eliminarEnfermeraArea(String datos){
         String[] parts=datos.split(",");
         areasHospital.get(obtenerIndex(parts[0])).eliminarListaEnfermeras(parts[1]);
-        
     }
+    /*Elimina a la enfermera del area en base al nombre de la coleccion
+    ListaEnfermerasHospital*/
     public void eliminarEnfermeraHospital(String nombre){
         enfermerasHospital.remove(nombre);
         for (int i=0;i<areasHospital.size();i++){
@@ -37,18 +44,28 @@ public class Hospital{
         }
         
     }
+    /*Elimina a un area de la coleccion ListaDeAreas completa segun el nombre*/
     public void eliminarArea(String nombreArea){
         areasHospital.remove(obtenerIndex(nombreArea));
     }
-    /*Agregar a las colecciones*/
-    public boolean agregarArea(String dato){
-        if (buscarArea(dato)==true){
+    
+    /*Funciones asociadas a la agregacion de datos en las 
+    colecciones*/
+    
+    /*Agrega un area nueva en la coleccion ListaDeAreas y retorna boolean con
+    valor true si se pudo y false si ocurrio algun error*/
+    public boolean agregarArea(String nombreArea){
+        if (buscarArea(nombreArea)==true){
             return false;
         }
-        AreasHospital aux2 = new AreasHospital(dato);
+        AreasHospital aux2 = new AreasHospital(nombreArea);
         areasHospital.add(aux2);
         return true; 
     }
+    /*Agrega una enfermera nueva en la coleccion ListaDeAreas,
+    ListaEnfermerasHospital y retorna boolean con valor true si se pudo y false 
+    si ocurrio algun error, para esto recibe un dato String concatenado con los
+    valores rellenados por la Clase menu*/
     public boolean agregarEnfermera(String dato){
         String[] parts=dato.split(",");
         System.out.println(dato);
@@ -74,6 +91,9 @@ public class Hospital{
 
         return true;
     }
+    /*Funcion que se ocupa en distintas funciones solo de esta clase que agrega
+    una enfermera, que se le pase por parametro, en todas las colecciones de 
+    la clase hospital*/
     public void modificarEnMapasListas(Enfermera enf){
         enfermerasHospital.put(enf);
         for (int i=0;i<areasHospital.size();i++){
@@ -83,7 +103,11 @@ public class Hospital{
             }
         }
     }
-    /*Mostrar las colecciones*/
+    
+    /*Funciones asociadas a mostrar las colecciones*/
+    
+    /*Retorna un ArrayList con los Strings concatenados con los nombres de todas
+    las areas del hospital*/
     public ArrayList mostrarListadoAreas(){
         ArrayList aux  = new ArrayList<>();
         
@@ -92,16 +116,21 @@ public class Hospital{
         }
         return aux; 
     }
-    public String mostrarEnfermerasArea(String aux){
+    /*Retorna un String concatenado con todos los datos de las enfermeras del 
+    area y recibe por parametro el nombre del Area*/
+    public String mostrarEnfermerasArea(String nombreArea){
         String s = null;
         for (int i=0;i<areasHospital.size();i++){
-            if (areasHospital.get(i).getNombre().equals(aux)){
+            if (areasHospital.get(i).getNombre().equals(nombreArea)){
                 s = areasHospital.get(i).Mostrar();
                 return s;
             }
         }
         return s;
     }
+    /*Retorna un ArrayList que en cada nodo contiene un String con los datos
+    concatenados de cada enfermera, por lo que cada enfermera es un nodo del 
+    ArrayList*/
     public ArrayList mostrarListadoEnfermeras(){
         ArrayList aux = new ArrayList();
         
@@ -110,7 +139,10 @@ public class Hospital{
         }
         return aux;
     }
-    //Marcar Entrada y Salida
+    
+    /*Funciones asociadas al salario*/
+    
+    /*Marca la entrada de una enfermera, recibiendo como dato el nombre de esta*/
     public void marcarEntrada( String dato){
         if (isNumeric(dato)){
             int datoInt = Integer.parseInt(dato);
@@ -124,6 +156,7 @@ public class Hospital{
             modificarEnMapasListas(enf);    
         } 
     }
+    /*Marca la Salida de una enfermera, recibiendo como dato el nombre de esta*/
     public void marcarSalida(String dato) {
         if (isNumeric(dato)){
             int datoInt = Integer.parseInt(dato);
@@ -174,7 +207,11 @@ public class Hospital{
             return s;
         }
     }
+    
     /*Uso de datos de Archivos*/
+    
+    /*Funcion que carga los datos desde un txt externo para inicializar 
+    el hospital*/
     public void cargarDatos(){
         File archivo = new File("Enfermeras.txt");
         int numeroClave=0;
@@ -212,6 +249,9 @@ public class Hospital{
             ex.printStackTrace(System.out);
         }   
     }
+    /*Funcion que ocupa a la clase ManejoArchivos para exportar un archivo de 
+    tipo txt con datos como el nombre, turno y codigo de cada enfermera del
+    hospital*/
     public void exportarReporte(){
         ManejoArchivos.crearArchivo("Reporte.txt");
         
@@ -226,11 +266,19 @@ public class Hospital{
         }
          
     }
-    /*Modificar las colecciones*/
+    
+    /*Funciones asociadas a la modificacion de datos en las 
+    colecciones*/
+    
+    /*Funcion que cambia el nombre del area y que recibe por parametro el nombre
+    del Area*/
     public void cambiarNombreArea(String datos){
         String[] parts=datos.split(",");
         areasHospital.get(obtenerIndex(parts[0])).setNombre(parts[1]);  
     }
+    /*Funcion que cambia en las colecciones de hospital el turno de la enfermera
+    y que retorna un String concatenado con los datos antes de modificar y 
+    despues de esta*/
     public String cambioTurnoEnfermera(String dato, String turno){
         Enfermera enfermera;
         if (isNumeric(dato)==true){
@@ -246,6 +294,9 @@ public class Hospital{
         modificarEnMapasListas(enfermera);
         return s;
     }
+    /*Funcion que cambia en las colecciones de hospital la disponibilidad de la 
+    enfermera y que retorna un String concatenado con los datos antes de 
+    modificar y despues de esta*/
     public String cambioTurnoEnfermera(String dato, boolean disponibilidad){
         Enfermera enfermera;
         if (isNumeric(dato)==true){
@@ -261,6 +312,8 @@ public class Hospital{
         modificarEnMapasListas(enfermera);
         return s;
     }
+    /*Funcion que cumple lo mismo que las dos funciones antes que esta, pero 
+    modifica ambas al mismo tiempo*/
     public String cambioTurnoEnfermera(String dato, String turno, boolean disponibilidad ){
         Enfermera enfermera;
         if (isNumeric(dato)==true){
@@ -277,7 +330,11 @@ public class Hospital{
         modificarEnMapasListas(enfermera);
         return s;
     }
-    /*Buscar en las colecciones*/
+    
+    /*Funciones asociadas a buscar en las colecciones de datos del hospital*/
+    
+    /*Funcion que busca a una enfermera en la ListaEnfermerasHospital por codigo 
+    y retorna un String con los datos de la enfermera en caso de encontrarlo*/
     public String buscarEnfermera(int codigo){
         Enfermera enfermera;
         if(enfermerasHospital.containsKey(codigo)==true){
@@ -286,6 +343,8 @@ public class Hospital{
             return s;
         }else return ("No existe ese codigo de enfermera,");
     }
+    /*Funcion que busca a una enfermera en la ListaEnfermerasHospital por nombre 
+    y retorna un String con los datos de la enfermera en caso de encontrarlo*/
     public String buscarEnfermera(String nombre){
         Enfermera enfermera;
         
@@ -295,12 +354,18 @@ public class Hospital{
             return s;
         }else return ("Nombre de enfermera no encontrado,");
     }
+    /*Funcion que determina si existe o no una enfermera en las colecciones de 
+    hospital en base al nombre y que retorna un boolean con valor true si existe
+    y false si es que no*/
     public boolean existeEnfermera(String nombre){
         if (enfermerasHospital.containsKey(nombre)==true){
             return true;
         }
         return false;
     }
+    /*Funcion que determina si existe o no un area en la coleccion de 
+    ListaAreasHospital en base al nombre de esta y que retorna un boolean 
+    con valor true si existe y false si es que no*/
     public boolean buscarArea(String nombreArea){
         for (int i=0;i<areasHospital.size();i++){
             if (areasHospital.get(i).getNombre().equals(nombreArea)){
@@ -309,6 +374,8 @@ public class Hospital{
         }
         return false;
     }
+    /*Funcion que busca entre todas las enfermeras del hospital a la que 
+    tenga el mejor sueldo hasta el momento*/
     public String mejorPagada(){
         int aux2=0; 
         String aux1=null;
@@ -337,19 +404,21 @@ public class Hospital{
     }
  
 
-    /*Metodos asociados a las funciones*/
+    /*Metodos asociados a las funciones para mejor modularizacion*/
+    
+    /*Funcion que retorna a un objeto enfermera en base a cierto codigo*/
     public Enfermera retornarEnfermera (int codigo){
         if(enfermerasHospital.containsKey(codigo)==true)return enfermerasHospital.get(codigo);
-        else System.out.println("No existe ese codigo de enfermera");
-        
         return null ;
     }
+    /*Funcion que retorna a un objeto enfermera en base a cierto nombre*/
     public Enfermera retornarEnfermera (String nombre){
         if(enfermerasHospital.containsKey(nombre)==true)return enfermerasHospital.get(nombre);
-        else System.out.println("No existe ese nombre de enfermera");
-        
         return null ;
     }
+    /*Revisa si la cadena que recibe por parametro es un numero o no, por lo que
+    retornara un valor boolean true en caso de que si sea un numero y no en caso
+    contrario*/
     public static boolean isNumeric (String cadena){
         boolean result;
         try{
@@ -360,6 +429,8 @@ public class Hospital{
         }
         return result;
     }
+    /*Funcion que obtiene el index de la lista en donde se ubica en base
+    al nombre del area*/
     public int obtenerIndex(String nombreArea){
         int i;
         for (i=0;i<areasHospital.size();i++){

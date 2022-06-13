@@ -44,17 +44,22 @@ public class Enfermera implements MostrarDatos{
         
     }
     
-    //
+    /*Funcion que calcula el sueldo dependiendo de que salario tenga y lo guarda*/
     public void calcularSalario(Salario aux){
         sueldo=aux.calcularSueldo(horasTrabajadas);
     }
+    /*Funcion que retorna un String concatenado con los datos del sueldo y las
+    horas trabajadas*/
     public String mostrarSalario(Salario aux){
         return aux.mostrarSueldo(sueldo,horasTrabajadas);
     }
-    
+    /*Funcion que llama a la clase IngSalEnfermeras y que marca la hora de 
+    entrada de la enfermera al trabajo*/
     public void marcarEntrada(){
         horasDiarias.marcarEntrada();
     }
+    /*Funcion que llama a la clase IngSalEnfermeras y que marca la hora de 
+    salida de la enfermera al trabajo*/
     public void marcarSalida(){
         horasDiarias.marcarSalida();
         horasTrabajadas=horasDiarias.actualizarHorasAcumuladas();
