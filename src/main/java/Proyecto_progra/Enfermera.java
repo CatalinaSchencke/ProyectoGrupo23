@@ -1,6 +1,8 @@
 package Proyecto_progra;
 
 public class Enfermera implements MostrarDatos{
+    
+    //Instancias
     private String nombre;
     private String contrato;
     private String turno;
@@ -10,7 +12,7 @@ public class Enfermera implements MostrarDatos{
     private double horasTrabajadas;
     private IngSalEnfermeras horasDiarias;
    
-    
+    //Constructores
     public Enfermera(){
         this.horasTrabajadas=0;
         this.sueldo=0;
@@ -22,6 +24,10 @@ public class Enfermera implements MostrarDatos{
         this.horasDiarias=new IngSalEnfermeras();
     }
     
+    //Métodos
+    
+    //Implementación de Interfase con información
+    //de la enfermera, retornando cadena con esta
     public String Mostrar(){
         String s =nombre;
         if (disponibilidad==true){
@@ -37,7 +43,8 @@ public class Enfermera implements MostrarDatos{
         return s;
         
     }
-
+    
+    //
     public void calcularSalario(Salario aux){
         sueldo=aux.calcularSueldo(horasTrabajadas);
     }

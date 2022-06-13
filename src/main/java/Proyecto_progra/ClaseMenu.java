@@ -5,9 +5,10 @@ import java.util.*;
 
 public class ClaseMenu extends javax.swing.JFrame {
     
-    
+    //Instancia
     Hospital hospital;
-    
+        
+    //
     public ClaseMenu() {
         this.hospital = new Hospital("Alexander Fleming");
         hospital.cargarDatos();

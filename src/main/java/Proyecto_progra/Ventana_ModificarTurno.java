@@ -15,7 +15,7 @@ public class Ventana_ModificarTurno extends javax.swing.JFrame {
     /**
      * Creates new form Ventana_ModificarTurno
      */
-    
+    //Constructor
     public Ventana_ModificarTurno(Hospital hospital) {
         initComponents();
         this.hospital= hospital;
@@ -97,6 +97,9 @@ public class Ventana_ModificarTurno extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    //Boton donde se agregan los campos ingresados (luego de corroborar) como una enfermera
+
     private void modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarActionPerformed
        if (enfermera.getText().isEmpty() || turno.getText().isEmpty()){
             JOptionPane.showMessageDialog(null,"Algun campo no está rellenado. Favor revisar.","Alerta",JOptionPane.WARNING_MESSAGE);
@@ -137,12 +140,7 @@ public class Ventana_ModificarTurno extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Ventana_ModificarTurno(hospital).setVisible(true);
-                
-            }
-        });
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

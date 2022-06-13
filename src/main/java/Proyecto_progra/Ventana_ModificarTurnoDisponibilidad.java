@@ -106,6 +106,7 @@ public class Ventana_ModificarTurnoDisponibilidad extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+        //Boton donde se efectuan los cambios ingresados (luego de corroborar)
     private void modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarActionPerformed
         if (enfermera.getText().isEmpty() || disponibilidad.getText().isEmpty() || turno.getText().isEmpty()){
             JOptionPane.showMessageDialog(null,"Algun campo no está rellenado. Favor revisar.","Alerta",JOptionPane.WARNING_MESSAGE);
@@ -148,11 +149,7 @@ public class Ventana_ModificarTurnoDisponibilidad extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Ventana_ModificarTurnoDisponibilidad(hospital).setVisible(true);
-            }
-        });
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
