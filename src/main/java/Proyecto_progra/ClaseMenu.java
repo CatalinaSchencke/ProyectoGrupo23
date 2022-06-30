@@ -16,7 +16,7 @@ public class ClaseMenu extends javax.swing.JFrame {
     }
     
     /*Menu que se muestra por pantalla, corresponde al menu proncipal*/
-    public void menuHospital()throws IOException{
+    public void menuHospital()throws IOException, ErrorIOArchivosException{
         
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));       
         int numero = -1;
@@ -169,10 +169,11 @@ public class ClaseMenu extends javax.swing.JFrame {
     }
     /*Pide el nombre por pantalla para buscar a una enfermera en el hospital y
     retornarla por pantalla*/
-    public void buscarEnfermera()throws IOException{
+    public void buscarEnfermera()throws IOException, ErrorIOArchivosException{
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Ingrese numero Codigo o Nombre de la enfermera:");
         String dato=entrada.readLine();
+        
         if (hospital.isNumeric(dato)==true){
             mostrarStringsConcatenados(hospital.buscarEnfermera(Integer.parseInt(dato))); 
 

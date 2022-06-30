@@ -252,7 +252,7 @@ public class Hospital{
     /*Funcion que ocupa a la clase ManejoArchivos para exportar un archivo de 
     tipo txt con datos como el nombre, turno y codigo de cada enfermera del
     hospital*/
-    public void exportarReporte(){
+    public void exportarReporte() throws FileNotFoundException, IOException{
         ManejoArchivos.crearArchivo("Reporte.txt");
         
         for(int i=0; i<areasHospital.size(); i++){
@@ -352,7 +352,11 @@ public class Hospital{
             enfermera=enfermerasHospital.get(nombre);
             String s = enfermera.Mostrar();
             return s;
-        }else return ("Nombre de enfermera no encontrado,");
+            
+        }else {
+            return ("Nombre de enfermera no encontrado,");
+        }
+        
     }
     /*Funcion que determina si existe o no una enfermera en las colecciones de 
     hospital en base al nombre y que retorna un boolean con valor true si existe
