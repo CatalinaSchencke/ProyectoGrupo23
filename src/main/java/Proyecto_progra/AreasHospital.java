@@ -1,6 +1,6 @@
 package Proyecto_progra;
 
-import Colecciones.ListaEnfermerasArea;
+import Colecciones.*;
 
 public class AreasHospital implements MostrarDatos{
     //Instancias

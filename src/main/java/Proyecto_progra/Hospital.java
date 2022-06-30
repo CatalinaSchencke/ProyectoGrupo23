@@ -75,7 +75,7 @@ public class Hospital{
         if (parts[1].equals("true")) enfermera.setDisponibilidad(true);
         else if (parts[1].equals("false")) enfermera.setDisponibilidad(false);
         else return false;
-        enfermera.setTurno(parts[3]);
+        enfermera.setTurno(parts[2]);
        
         int max=0;
         for (int i : enfermerasHospital.keySet()) {
