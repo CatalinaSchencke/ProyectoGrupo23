@@ -1,6 +1,7 @@
 
 package Proyecto_progra;
 
+import Excepciones.*;
 import java.io.*;
 
 public class ManejoArchivos {

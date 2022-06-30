@@ -1,5 +1,7 @@
 package Proyecto_progra;
 
+import Excepciones.ErrorIOArchivosException;
+import Ventanas.*;
 import java.io.*;
 import java.util.*;
 

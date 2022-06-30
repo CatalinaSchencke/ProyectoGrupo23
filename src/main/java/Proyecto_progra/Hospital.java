@@ -1,5 +1,6 @@
 package Proyecto_progra;
 
+import Colecciones.*;
 import java.io.*;
 import java.util.*;
 
@@ -82,7 +83,7 @@ public class Hospital{
         }
         enfermera.setCodigo(max+1);
         
-        enfermera.setContrato("INDEFINIDO");
+        enfermera.setContrato(parts[4]);
         
         //agregar a la lista
         areasHospital.get(obtenerIndex(parts[3])).agregarListaEnfermeras(enfermera);
